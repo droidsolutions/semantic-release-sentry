@@ -1,3 +1,10 @@
+## [1.0.5](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.4...v1.0.5) (2019-12-20)
+
+
+### Bug Fixes
+
+* rename verify to verifyConditions ([76dcb94](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/commit/76dcb94c93557b780e2f6bf119fe8e8ea7eb0981))
+
 ## [1.0.4](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.3...v1.0.4) (2019-12-20)
 
 

@@ -1,0 +1,68 @@
+{
+  "name": "@droidsolutions/semantic-release-sentry",
+  "version": "0.9.0",
+  "description": "Semantic release plugin to create Sentry releases",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Sentry",
+    "semantic-release",
+    "semantic",
+    "release",
+    "plugin"
+  ],
+  "author": "Stefan Ißmer <stefan.issmer@droidsolutions.de>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.droidnet.de:droidsolutions/deployment/semantic-release-sentry.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.droidnet.de"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "@semantic-release/changelog": "^3.0.6",
+    "@semantic-release/git": "^7.0.18",
+    "@semantic-release/gitlab": "^4.0.4",
+    "husky": "^3.1.0",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
+    "semantic-release": "^15.13.31"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "release": {
+    "gitlabUrl": "https://gitlab.droidnet.de",
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/changelog",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/gitlab",
+      "@semantic-release/git"
+    ]
+  },
+  "dependencies": {
+    "@sentry/cli": "^1.49.0",
+    "execa": "^4.0.0"
+  }
+}

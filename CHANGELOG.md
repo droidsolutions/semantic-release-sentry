@@ -1,3 +1,10 @@
+## [1.0.3](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.2...v1.0.3) (2019-12-20)
+
+
+### Bug Fixes
+
+* correct release in publish step ([af0a922](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/commit/af0a92258b27a91a6b20c5aa9f7dcca7f8d4cba6))
+
 ## [1.0.2](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.1...v1.0.2) (2019-12-20)
 
 

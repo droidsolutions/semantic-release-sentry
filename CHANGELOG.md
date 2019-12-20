@@ -1,3 +1,10 @@
+## [1.0.2](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.1...v1.0.2) (2019-12-20)
+
+
+### Bug Fixes
+
+* proper build of nextRelease ([112f791](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/commit/112f79133c94b05434c88c0fbc632c82f53672da))
+
 ## [1.0.1](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.0...v1.0.1) (2019-12-20)
 
 

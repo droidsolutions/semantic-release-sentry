@@ -1,3 +1,10 @@
+## [1.0.4](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.3...v1.0.4) (2019-12-20)
+
+
+### Bug Fixes
+
+* correctly read package name from package.json ([1f639fc](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/commit/1f639fca2c87f9ed265ddcf3ad1da14c302e07f1))
+
 ## [1.0.3](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.2...v1.0.3) (2019-12-20)
 
 

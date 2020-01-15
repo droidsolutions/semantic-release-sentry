@@ -7,17 +7,21 @@ This is a [Semantic Release](https://github.com/semantic-release/semantic-releas
 ## Usage
 
 Just install the plugin with `npm install @droidsolutions/semantic-release-sentry` and add a line to your plugin config:
+
 ```json
 {
   "release": {
-    "plugins": [
-      "...",
-      "@droidsolutions/semantic-release-sentry"
-    ]
+    "plugins": ["...", "@droidsolutions/semantic-release-sentry"]
   }
 }
 ```
 
 ### Configuration
 
+#### packageName
+
 If you don't give any configuration, the name from package.json will be used, along with the version number to create the release. If you like to use another name you can provide a `packageName` setting with the name you want to have. Be aware of the [name limitations](https://docs.sentry.io/workflow/releases/?platform=node#configure-sdk) Sentry gives in their docs.
+
+#### uploadSourceMaps
+
+Per default uploadSourceMaps is set to true, if it is not specified. If you wan't to skip uploading source maps (for example if you have a non JS project) just set `uploadSourceMaps` to false in the config.

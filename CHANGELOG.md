@@ -1,3 +1,10 @@
+# [1.1.0](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.6...v1.1.0) (2020-01-15)
+
+
+### Features
+
+* option to disable source map upload ([97866a7](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/commit/97866a71e1ad00326a99e0287f6730966edf3c8f))
+
 ## [1.0.6](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.5...v1.0.6) (2020-01-15)
 
 

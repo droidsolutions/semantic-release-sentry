@@ -1,3 +1,10 @@
+## [1.0.6](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.5...v1.0.6) (2020-01-15)
+
+
+### Bug Fixes
+
+* correctly report verify errors ([636ae4a](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/commit/636ae4a62d7efc943a42f384043e27adfd47a3e0))
+
 ## [1.0.5](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.4...v1.0.5) (2019-12-20)
 
 

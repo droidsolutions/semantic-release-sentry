@@ -1,3 +1,10 @@
+## [1.1.2](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.1.1...v1.1.2) (2020-02-14)
+
+
+### Bug Fixes
+
+* add logging about plugin config ([9054e95](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/commit/9054e95ef915c0ab336a2dce977fcfa6675a75fa))
+
 ## [1.1.1](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.1.0...v1.1.1) (2020-02-14)
 
 

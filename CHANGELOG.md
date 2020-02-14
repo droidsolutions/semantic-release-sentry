@@ -1,3 +1,10 @@
+## [1.1.1](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.1.0...v1.1.1) (2020-02-14)
+
+
+### Bug Fixes
+
+* remove --no-sourcemap-reference from sourcemap upload command ([e467f7c](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/commit/e467f7c76b9f6fb8d6decefe3e06b9b566f4ef80))
+
 # [1.1.0](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.0.6...v1.1.0) (2020-01-15)
 
 

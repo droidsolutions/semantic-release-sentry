@@ -1,6 +1,6 @@
 {
   "name": "@droidsolutions/semantic-release-sentry",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Semantic release plugin to create Sentry releases",
   "main": "index.js",
   "scripts": {

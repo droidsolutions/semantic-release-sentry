@@ -1,3 +1,10 @@
+# [1.2.0](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.1.2...v1.2.0) (2020-02-14)
+
+
+### Features
+
+* change uploadSourceMaps to skipUploadSourceMaps ([1d7a725](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/commit/1d7a725991d309ed9ab91b8fdd141948104c56a2))
+
 ## [1.1.2](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.1.1...v1.1.2) (2020-02-14)
 
 

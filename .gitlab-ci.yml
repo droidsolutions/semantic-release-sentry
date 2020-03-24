@@ -1,13 +1,6 @@
+include:
+  - project: droidsolutions/deployment/gitlab-ci-recipes
+    file: templates/semantic-release-npm.yml
+
 stages:
   - release
-
-release:master:
-  image: registry.droidnet.de/buildfarm/docker-build-container/alpine/nodejs:latest
-  stage: release
-  only:
-    - master
-  tags:
-    - docker
-  script:
-    - npm ci
-    - npx semantic-release

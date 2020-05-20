@@ -57,7 +57,7 @@
   },
   "renovate": {
     "extends": [
-      "@droidsolutions:shareable-config", ":assignee(stefanissmer)"
+      "@droidsolutions:shareableconfig", ":assignee(stefanissmer)"
     ]
   }
 }

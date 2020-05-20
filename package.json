@@ -54,5 +54,10 @@
   },
   "release": {
     "extends": "@droidsolutions/semantic-release-publish-npm"
+  },
+  "renovate": {
+    "extends": [
+      "@droidsolutions:jslib", ":assignee(stefanissmer)"
+    ]
   }
 }

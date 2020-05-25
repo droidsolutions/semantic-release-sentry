@@ -27,13 +27,13 @@
     "execa": "^4.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
-    "@droidsolutions/semantic-release-publish-npm": "^1.0.0",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.0.9",
-    "prettier": "^2.0.2",
-    "semantic-release": "^17.0.4"
+    "@commitlint/cli": "8.3.5",
+    "@commitlint/config-conventional": "8.3.4",
+    "@droidsolutions/semantic-release-publish-npm": "1.0.0",
+    "husky": "4.2.3",
+    "lint-staged": "10.0.9",
+    "prettier": "2.0.2",
+    "semantic-release": "17.0.4"
   },
   "lint-staged": {
     "*.js": [

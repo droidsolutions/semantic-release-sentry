@@ -1,3 +1,10 @@
+## [1.2.1](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.2.0...v1.2.1) (2020-06-02)
+
+
+### Bug Fixes
+
+* more error log when sentry info fails ([e23637a](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/e23637afabdba4102fd6f6152e49c52a598a9595))
+
 # [1.2.0](https://gitlab.droidnet.de/droidsolutions/deployment/semantic-release-sentry/compare/v1.1.2...v1.2.0) (2020-02-14)
 
 

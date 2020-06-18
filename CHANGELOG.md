@@ -1,3 +1,10 @@
+## [1.2.3](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.2.2...v1.2.3) (2020-06-18)
+
+
+### Bug Fixes
+
+* use correct order of "sentry release set-commits" agruments ([fd695ab](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/fd695ab95312bcbc68fa9b741c04bfe0c37d6248))
+
 ## [1.2.2](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.2.1...v1.2.2) (2020-06-18)
 
 

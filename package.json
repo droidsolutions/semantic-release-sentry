@@ -23,8 +23,8 @@
     "registry": "https://npm.droidnet.de"
   },
   "dependencies": {
-    "@sentry/cli": "^1.54.0",
-    "execa": "^4.0.2"
+    "@sentry/cli": "^1.55.0",
+    "execa": "^4.0.3"
   },
   "devDependencies": {
     "@commitlint/cli": "8.3.5",
@@ -33,7 +33,7 @@
     "husky": "4.2.5",
     "lint-staged": "10.2.11",
     "prettier": "2.0.5",
-    "semantic-release": "17.0.8"
+    "semantic-release": "17.1.1"
   },
   "lint-staged": {
     "*.js": [

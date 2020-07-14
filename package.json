@@ -27,8 +27,8 @@
     "execa": "^4.0.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "8.3.5",
-    "@commitlint/config-conventional": "8.3.4",
+    "@commitlint/cli": "9.1.1",
+    "@commitlint/config-conventional": "9.1.1",
     "@droidsolutions/semantic-release-publish-npm": "1.0.2",
     "husky": "4.2.5",
     "lint-staged": "10.2.11",

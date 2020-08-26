@@ -1,3 +1,10 @@
+# [1.3.0](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.2.5...v1.3.0) (2020-08-26)
+
+
+### Features
+
+* add allowSentryFailure config to skip sentry ([fba388b](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/fba388b9f510eb00273af77937d98438162ed6ff))
+
 ## [1.2.5](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.2.4...v1.2.5) (2020-07-29)
 
 

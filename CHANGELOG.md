@@ -1,3 +1,10 @@
+## [1.3.1](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.3.0...v1.3.1) (2020-08-26)
+
+
+### Bug Fixes
+
+* context was not defined in verify.js ([5c9d510](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/5c9d5105c73a7a0756b11229773cf93c633a90e7))
+
 # [1.3.0](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.2.5...v1.3.0) (2020-08-26)
 
 

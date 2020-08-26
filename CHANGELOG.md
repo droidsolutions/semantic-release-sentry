@@ -1,3 +1,10 @@
+## [1.3.2](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.3.1...v1.3.2) (2020-08-26)
+
+
+### Bug Fixes
+
+* stupid me...do not throw when allowFailure is set ([c8cc43b](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/c8cc43b0b366404d94d57035671b9844cdb0a6b0))
+
 ## [1.3.1](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.3.0...v1.3.1) (2020-08-26)
 
 

@@ -1,3 +1,10 @@
+## [1.3.4](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.3.3...v1.3.4) (2020-09-24)
+
+
+### Bug Fixes
+
+* add more logging on cli failure ([0d9e739](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/0d9e739fd35191d7eb9ae771ba7f8225c293d5c2))
+
 ## [1.3.3](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.3.2...v1.3.3) (2020-09-23)
 
 

@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@sentry/cli": "^1.60.1",
-    "execa": "^4.1.0"
+    "execa": "^5.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "11.0.0",

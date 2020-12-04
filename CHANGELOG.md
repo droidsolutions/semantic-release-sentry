@@ -1,3 +1,10 @@
+## [1.3.7](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.3.6...v1.3.7) (2020-12-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency execa to v5 ([f6ea0ce](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/f6ea0ceb6454b94f8e5880fb7ce50196e47f77be))
+
 ## [1.3.6](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.3.5...v1.3.6) (2020-12-04)
 
 

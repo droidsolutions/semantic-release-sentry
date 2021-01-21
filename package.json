@@ -17,7 +17,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git@gitlab.droidnet.de:droidsolutions/semantic-release/semantic-release-sentry.git"
+    "url": "https@gitlab.droidnet.de:droidsolutions/semantic-release/semantic-release-sentry.git"
   },
   "publishConfig": {
     "registry": "https://npm.droidnet.de"

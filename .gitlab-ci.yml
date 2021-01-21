@@ -1,6 +1,7 @@
 include:
   - project: droidsolutions/deployment/gitlab-ci-recipes
     file: templates/semantic-release-npm.yml
+    ref: v1.3.2
 
 stages:
   - release

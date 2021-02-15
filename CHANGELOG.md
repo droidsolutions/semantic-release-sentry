@@ -1,3 +1,10 @@
+## [1.3.9](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.3.8...v1.3.9) (2021-02-15)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([e5da22c](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/e5da22c9c204367ae1229b6464440b85ff226742))
+
 ## [1.3.8](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.3.7...v1.3.8) (2021-01-04)
 
 

@@ -1,3 +1,10 @@
+# [1.4.0](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.3.9...v1.4.0) (2021-02-18)
+
+
+### Features
+
+* write Sentry version to env file ([971087b](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/971087baac1d50b17f9f5598a819f8cdb1bb403d))
+
 ## [1.3.9](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.3.8...v1.3.9) (2021-02-15)
 
 

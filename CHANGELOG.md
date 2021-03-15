@@ -1,3 +1,10 @@
+## [1.4.1](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.4.0...v1.4.1) (2021-03-15)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([c494d16](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/c494d1685f70a10c5ff27351b33dfdf3379b3105))
+
 # [1.4.0](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.3.9...v1.4.0) (2021-02-18)
 
 

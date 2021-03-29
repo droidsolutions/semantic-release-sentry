@@ -2,9 +2,14 @@
   "name": "@droidsolutions/semantic-release-sentry",
   "version": "1.4.1",
   "description": "Semantic release plugin to create Sentry releases",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint --ext ts,js .",
+    "build": "tsc"
   },
   "keywords": [
     "Sentry",
@@ -29,17 +34,19 @@
   "devDependencies": {
     "@commitlint/cli": "12.0.1",
     "@commitlint/config-conventional": "12.0.1",
+    "@droidsolutions/eslint-config-droid": "1.7.6",
     "@droidsolutions/semantic-release-publish-npm": "1.1.4",
+    "@types/aggregate-error": "1.0.1",
+    "@types/semantic-release": "17.2.0",
     "husky": "4.3.8",
     "lint-staged": "10.5.4",
     "prettier": "2.2.1",
-    "semantic-release": "17.4.2"
+    "semantic-release": "17.4.2",
+    "typescript": "4.2.3"
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.[js,ts,json,md,yml]": "prettier --write",
+    "*.[js,ts]": "eslint --ext ts,js"
   },
   "commitlint": {
     "extends": [

@@ -23,6 +23,10 @@ Just install the plugin with `npm install @droidsolutions/semantic-release-sentr
 
 If you don't give any configuration, the name from package.json will be used, along with the version number to create the release. If you like to use another name you can provide a `packageName` setting with the name you want to have. Be aware of the [name limitations](https://docs.sentry.io/workflow/releases/?platform=node#configure-sdk) Sentry gives in their docs.
 
-#### skipUploadSourceMaps
+#### uploadSourceMaps
 
-Per default source maps are uploaded to Sentry if nothing specified. If you wan't to skip uploading source maps (for example if you have a non JS project) just set `skipUploadSourceMaps` to true in the config.
+Per default source maps are not uploaded to Sentry if nothing specified. If you wan't to upload source maps (for example if you have a JS/TS project) just set `uploadSourceMaps` to true in the config. You can specify the sources directory with the `sources` config. if not given `dist` is assumed as the source directory.
+
+#### allowSentryFailure
+
+This setting prevents errors from this plugin when Sentry is not reachable somehow. If set to true, all errors will be catched but this probably also means, that no Sentry release is created and no source maps are uploaded. If you rely on the existing Sentry release somewhere later in your CI pipeline (for example in the deploy job) you should also make it failsave.

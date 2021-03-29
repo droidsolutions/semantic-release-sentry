@@ -1,7 +1,21 @@
 include:
   - project: droidsolutions/deployment/gitlab-ci-recipes
+    file: templates/eslint.yml
+    ref: v2.5.0
+  - project: droidsolutions/deployment/gitlab-ci-recipes
+    file: templates/transpile.yml
+    ref: v2.5.0
+  - project: droidsolutions/deployment/gitlab-ci-recipes
     file: templates/semantic-release-npm.yml
     ref: v2.5.0
 
+before_script:
+  - npm ci
+
 stages:
+  - check
   - release
+
+release:
+  dependencies:
+    - transpile

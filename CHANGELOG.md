@@ -1,3 +1,16 @@
+# [2.0.0](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.4.1...v2.0.0) (2021-03-29)
+
+
+### Features
+
+* change to TS and reverse uploadSourceMaps options ([c95f7b8](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/c95f7b80477a9da148526feb59a7fdebb04f5082))
+
+
+### BREAKING CHANGES
+
+* This plugin no longer uploads source maps in the default. The skipUploadSourceMaps
+option is now uploadSourceMaps with the reverse logic.
+
 ## [1.4.1](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v1.4.0...v1.4.1) (2021-03-15)
 
 

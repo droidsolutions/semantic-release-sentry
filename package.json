@@ -28,7 +28,7 @@
     "registry": "https://npm.droidnet.de"
   },
   "dependencies": {
-    "@sentry/cli": "^1.63.1",
+    "@sentry/cli": "^1.63.2",
     "execa": "^5.0.0"
   },
   "devDependencies": {

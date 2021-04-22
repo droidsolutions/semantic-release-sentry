@@ -1,3 +1,10 @@
+## [2.0.3](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v2.0.2...v2.0.3) (2021-04-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @sentry/cli to ^1.64.1 ([02f5e88](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/02f5e88ed376667c46becad1d2e2db54b5688486))
+
 ## [2.0.2](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v2.0.1...v2.0.2) (2021-04-13)
 
 

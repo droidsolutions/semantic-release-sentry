@@ -32,8 +32,8 @@
     "execa": "^5.1.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "13.1.0",
-    "@commitlint/config-conventional": "13.1.0",
+    "@commitlint/cli": "13.2.0",
+    "@commitlint/config-conventional": "13.2.0",
     "@droidsolutions/eslint-config-droid": "1.7.9",
     "@droidsolutions/semantic-release-publish-npm": "1.1.6",
     "@types/aggregate-error": "1.0.1",

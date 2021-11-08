@@ -37,7 +37,7 @@
     "@droidsolutions/eslint-config-droid": "2.0.0",
     "@droidsolutions/semantic-release-publish-npm": "1.1.9",
     "@types/aggregate-error": "1.0.1",
-    "@types/semantic-release": "17.2.2",
+    "@types/semantic-release": "17.2.3",
     "husky": "4.3.8",
     "lint-staged": "11.2.6",
     "prettier": "2.4.1",

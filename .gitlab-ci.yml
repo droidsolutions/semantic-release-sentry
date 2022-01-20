@@ -1,13 +1,13 @@
 include:
   - project: droidsolutions/deployment/gitlab-ci-recipes
     file: templates/eslint.yml
-    ref: v3.19.4
+    ref: v3.19.5
   - project: droidsolutions/deployment/gitlab-ci-recipes
     file: templates/transpile.yml
-    ref: v3.19.4
+    ref: v3.19.5
   - project: droidsolutions/deployment/gitlab-ci-recipes
     file: templates/semantic-release-npm.yml
-    ref: v3.19.4
+    ref: v3.19.5
 
 before_script:
   - npm ci

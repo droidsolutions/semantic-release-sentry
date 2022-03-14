@@ -34,7 +34,7 @@
   "devDependencies": {
     "@commitlint/cli": "16.2.1",
     "@commitlint/config-conventional": "16.2.1",
-    "@droidsolutions/eslint-config-droid": "2.0.38",
+    "@droidsolutions/eslint-config-droid": "2.0.39",
     "@droidsolutions/semantic-release-publish-npm": "1.1.9",
     "@types/aggregate-error": "1.0.1",
     "@types/semantic-release": "17.2.3",

@@ -1,3 +1,10 @@
+# [2.1.0](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v2.0.28...v2.1.0) (2022-04-14)
+
+
+### Features
+
+* use new Sentry CLI commands ([5869255](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/commit/58692559b584e0402f43a289f1608e12c1377637))
+
 ## [2.0.28](https://gitlab.droidnet.de/droidsolutions/semantic-release/semantic-release-sentry/compare/v2.0.27...v2.0.28) (2022-04-13)
 
 

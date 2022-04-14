@@ -1,5 +1,6 @@
 import execa from "execa";
 import { Config, Context } from "semantic-release";
+import { convertExecaResultToSemanticReleaseError } from "./helper";
 import { UserConfig } from "./userConfig";
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
 const SemanticReleaseError = require("@semantic-release/error");
@@ -17,7 +18,6 @@ export const fail = async (pluginConfig: Config & UserConfig, context: Context):
       return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    throw new SemanticReleaseError(`Unable to use Sentry CLI: ${(err as Error).message}`, "ESENTRYCLIFAILURE", err);
+    throw convertExecaResultToSemanticReleaseError(err, "Failed to delete Sentry release.");
   }
 };

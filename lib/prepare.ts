@@ -2,6 +2,7 @@ import execa from "execa";
 import fs from "fs/promises";
 import { EOL } from "os";
 import { Config, Context } from "semantic-release";
+import { convertExecaResultToSemanticReleaseError } from "./helper";
 import { UserConfig } from "./userConfig";
 
 export const prepare = async (pluginConfig: Config & UserConfig, context: Context): Promise<void> => {
@@ -20,6 +21,7 @@ export const prepare = async (pluginConfig: Config & UserConfig, context: Contex
       context.logger.log(`Sentry verify failed, but this is allowed by config. Err: ${(err as Error).message}`);
       return;
     }
-    throw new Error(`Unable to use Sentry CLI: ${(err as Error).message}`);
+
+    throw convertExecaResultToSemanticReleaseError(err, "Failed to create Sentry release");
   }
 };

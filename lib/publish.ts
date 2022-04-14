@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
-const SemanticReleaseError = require("@semantic-release/error");
 import execa from "execa";
 import { Config, Context } from "semantic-release";
+import { convertExecaResultToSemanticReleaseError } from "./helper";
 import { UserConfig } from "./userConfig";
 
 export const publish = async (pluginConfig: Config & UserConfig, context: Context): Promise<void> => {
@@ -15,14 +14,7 @@ export const publish = async (pluginConfig: Config & UserConfig, context: Contex
       context.logger.log("Uploading source maps.");
       await execa(
         "node_modules/.bin/sentry-cli",
-        [
-          "releases",
-          "files",
-          process.env["SENTRY_RELEASE_NAME"] as string,
-          "upload-sourcemaps",
-          pluginConfig.sources || "dist",
-          "--rewrite",
-        ],
+        ["sourcemaps", "--release", process.env["SENTRY_RELEASE_NAME"] as string, pluginConfig.sources || "dist"],
         { stdio: "inherit" },
       );
     }
@@ -33,7 +25,7 @@ export const publish = async (pluginConfig: Config & UserConfig, context: Contex
       context.logger.log(`Sentry publish failed, but this is allowed by config. Err: ${(err as Error).message}`);
       return;
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    throw new SemanticReleaseError(`Unable to use Sentry CLI: ${(err as Error).message}`, "ESENTRYCLIFAILURE", err);
+
+    throw convertExecaResultToSemanticReleaseError(err, "Failed to publish Sentry release.");
   }
 };

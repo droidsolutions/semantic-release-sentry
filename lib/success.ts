@@ -1,5 +1,6 @@
 import execa from "execa";
 import { Config, Context } from "semantic-release";
+import { convertExecaResultToSemanticReleaseError } from "./helper";
 import { UserConfig } from "./userConfig";
 
 export const success = async (pluginConfig: Config & UserConfig, context: Context): Promise<void> => {
@@ -20,6 +21,7 @@ export const success = async (pluginConfig: Config & UserConfig, context: Contex
       );
       return;
     }
-    throw new Error(`Unable to use Sentry CLI: ${(err as Error).message}`);
+
+    throw convertExecaResultToSemanticReleaseError(err, "Failed to finalize Sentry release.");
   }
 };

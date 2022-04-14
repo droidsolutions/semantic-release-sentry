@@ -2,8 +2,6 @@ import execa from "execa";
 import { Config, Context } from "semantic-release";
 import { convertExecaResultToSemanticReleaseError } from "./helper";
 import { UserConfig } from "./userConfig";
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
-const SemanticReleaseError = require("@semantic-release/error");
 
 export const fail = async (pluginConfig: Config & UserConfig, context: Context): Promise<void> => {
   try {
@@ -21,3 +19,4 @@ export const fail = async (pluginConfig: Config & UserConfig, context: Context):
     throw convertExecaResultToSemanticReleaseError(err, "Failed to delete Sentry release.");
   }
 };
+

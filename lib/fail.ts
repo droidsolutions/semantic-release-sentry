@@ -19,4 +19,3 @@ export const fail = async (pluginConfig: Config & UserConfig, context: Context):
     throw convertExecaResultToSemanticReleaseError(err, "Failed to delete Sentry release.");
   }
 };
-

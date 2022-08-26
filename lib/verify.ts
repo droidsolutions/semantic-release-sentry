@@ -3,6 +3,16 @@ import path from "path";
 import { Config, Context } from "semantic-release";
 import { UserConfig } from "./userConfig";
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace NodeJS {
+    interface ProcessEnv {
+      SENTRY_URL: string | undefined;
+      SENTRY_AUTH_TOKEN: string | undefined;
+    }
+  }
+}
+
 export const verify = async (pluginConfig: Config & UserConfig, context: Context): Promise<void> => {
   const errors = [];
   for (const envVar of ["SENTRY_AUTH_TOKEN"]) {

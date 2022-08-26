@@ -1,4 +1,3 @@
-import execa, { ExecaReturnBase } from "execa";
 import { Context } from "semantic-release";
 import { UserConfig } from "../lib/userConfig";
 import { verify } from "../lib/verify";
@@ -8,17 +7,18 @@ jest.mock("execa");
 describe("verify", () => {
   let originalEnv: NodeJS.ProcessEnv;
   let context: Context;
-  let execaMock: jest.Mock<ExecaReturnBase<string>, unknown[]>;
+  // let execaMock: jest.Mock<ExecaReturnBase<string>, unknown[]>;
 
   beforeAll(() => {
     originalEnv = process.env;
     const logMock = jest.fn<void, unknown[]>();
     context = {
+      branch: { name: "main" },
       env: {},
-      logger: { log: logMock, error: logMock },
+      logger: { log: logMock, error: logMock } as any,
       nextRelease: { gitTag: "v1.0.0", notes: "", type: "major", gitHead: "", version: "1.0.0" },
     };
-    execaMock = execa as unknown as jest.Mock<ExecaReturnBase<string>, unknown[]>;
+    // execaMock = execa as unknown as jest.Mock<ExecaReturnBase<string>, unknown[]>;
   });
 
   afterAll(() => {

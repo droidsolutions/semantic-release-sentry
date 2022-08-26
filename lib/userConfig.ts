@@ -3,4 +3,7 @@ export interface UserConfig {
   allowSentryFailure: boolean;
   uploadSourceMaps: boolean;
   sources?: string;
+  sentryProject?: string;
+  sentryOrg?: string;
+  sentryUrl?: string;
 }

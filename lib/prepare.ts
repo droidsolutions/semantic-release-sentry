@@ -11,6 +11,8 @@ export const prepare = async (pluginConfig: Config & UserConfig, context: Contex
     process.env["SENTRY_RELEASE_NAME"] = releaseName;
     await fs.appendFile("build.env", `SENTRY_RELEASE_NAME=${releaseName}${EOL}`);
 
+    context.logger.log(`Creating Sentry release for Project ${process.env["SENTRY_PROJECT"]} with name ${releaseName}`);
+
     await execa("node_modules/.bin/sentry-cli", ["releases", "new", process.env["SENTRY_RELEASE_NAME"]], {
       stdio: "inherit",
     });

@@ -1,4 +1,3 @@
-import AggregateError from "aggregate-error";
 import execa from "execa";
 import path from "path";
 import { Config, Context } from "semantic-release";
@@ -6,11 +5,34 @@ import { UserConfig } from "./userConfig";
 
 export const verify = async (pluginConfig: Config & UserConfig, context: Context): Promise<void> => {
   const errors = [];
-  for (const envVar of ["SENTRY_PROJECT", "SENTRY_ORG", "SENTRY_URL", "SENTRY_AUTH_TOKEN"]) {
+  for (const envVar of ["SENTRY_AUTH_TOKEN"]) {
     if (!process.env[envVar]) {
       errors.push(new Error(`Environment variable ${envVar} is not set!`));
     }
   }
+
+  const sentryProject: string | undefined = pluginConfig.sentryProject ?? process.env["SENTRY_PROJECT"];
+  if (!sentryProject) {
+    errors.push(
+      new Error(
+        "No Sentry project is set, either set it via sentryProject config or SENTRY_PROJECT environment variable.",
+      ),
+    );
+  }
+
+  const sentryOrg: string | undefined = pluginConfig.sentryOrg ?? process.env["SENTRY_ORG"];
+  if (!sentryOrg) {
+    errors.push(
+      new Error(
+        "No Sentry organisation is set, either set it via sentryOrg config or SENTRY_ORG environment variable.",
+      ),
+    );
+  }
+
+  const sentryUrl: string | undefined = process.env.SENTRY_URL ?? pluginConfig.sentryUrl ?? "https://sentry.io.";
+
+  // set Sentry url for CLI
+  process.env.SENTRY_URL = sentryUrl;
 
   let packageName = pluginConfig.packageName || process.env["npm_package_name"];
   if (!packageName) {
@@ -25,7 +47,7 @@ export const verify = async (pluginConfig: Config & UserConfig, context: Context
   try {
     await execa("node_modules/.bin/sentry-cli", ["info"], { stdio: "inherit" });
   } catch (err) {
-    context.logger.error(`Error running "sentry-cli info".`, err);
+    context.logger.error('Error running "sentry-cli info".', err);
     errors.push(new Error(`Unable to use Sentry CLI: ${(err as Error).message}`));
   }
 

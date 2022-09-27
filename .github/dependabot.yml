@@ -18,3 +18,7 @@ updates:
       time: "04:00"
     assignees:
       - "kampfmoehre"
+    commit-message:
+      prefix: "fix"
+      prefix-development: "chore"
+      include: "scope"

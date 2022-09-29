@@ -1,3 +1,11 @@
+## [1.0.2](https://github.com/droidsolutions/semantic-release-sentry/compare/v1.0.1...v1.0.2) (2022-09-29)
+
+
+### Bug Fixes
+
+* correct CLI arguments for Sourcemap upload ([4f7f145](https://github.com/droidsolutions/semantic-release-sentry/commit/4f7f1452d8f53d8914ea79d0ea04cf398980f50c))
+* move set-commits to prepare stage ([bba693e](https://github.com/droidsolutions/semantic-release-sentry/commit/bba693eebf75b21375ed3f5876dc8a7f0ea1b3b4))
+
 ## [1.0.1](https://github.com/droidsolutions/semantic-release-sentry/compare/v1.0.0...v1.0.1) (2022-09-27)
 
 

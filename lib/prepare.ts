@@ -16,6 +16,13 @@ export const prepare = async (pluginConfig: Config & UserConfig, context: Contex
     await execa("node_modules/.bin/sentry-cli", ["releases", "new", process.env["SENTRY_RELEASE_NAME"]], {
       stdio: "inherit",
     });
+
+    context.logger.log("Assigning commit to new Sentry release.");
+    await execa(
+      "node_modules/.bin/sentry-cli",
+      ["releases", "set-commits", process.env["SENTRY_RELEASE_NAME"] as string, "--auto"],
+      { stdio: "inherit" },
+    );
   } catch (err) {
     context.logger.error("fail", err);
 

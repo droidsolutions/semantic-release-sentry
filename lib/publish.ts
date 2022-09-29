@@ -5,11 +5,6 @@ import { UserConfig } from "./userConfig";
 
 export const publish = async (pluginConfig: Config & UserConfig, context: Context): Promise<void> => {
   try {
-    await execa(
-      "node_modules/.bin/sentry-cli",
-      ["releases", "set-commits", process.env["SENTRY_RELEASE_NAME"] as string, "--auto"],
-      { stdio: "inherit" },
-    );
     if (pluginConfig.uploadSourceMaps) {
       context.logger.log("Uploading source maps.");
       await execa(

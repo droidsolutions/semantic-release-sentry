@@ -9,7 +9,13 @@ export const publish = async (pluginConfig: Config & UserConfig, context: Contex
       context.logger.log("Uploading source maps.");
       await execa(
         "node_modules/.bin/sentry-cli",
-        ["sourcemaps", "--release", process.env["SENTRY_RELEASE_NAME"] as string, pluginConfig.sources || "dist"],
+        [
+          "sourcemaps",
+          "upload",
+          "--release",
+          process.env["SENTRY_RELEASE_NAME"] as string,
+          pluginConfig.sources || "dist",
+        ],
         { stdio: "inherit" },
       );
     }

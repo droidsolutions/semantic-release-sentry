@@ -43,7 +43,7 @@
     "@swc-node/jest": "1.5.5",
     "@types/aggregate-error": "1.0.1",
     "@types/jest": "29.2.4",
-    "@types/node": "18.11.17",
+    "@types/node": "18.11.18",
     "@types/semantic-release": "17.2.4",
     "@typescript-eslint/eslint-plugin": "5.47.0",
     "@typescript-eslint/parser": "5.47.1",

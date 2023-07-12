@@ -109,7 +109,12 @@
       "^.+\\.(t|j)sx?$": [
         "@swc-node/jest",
         {
-          "dynamicImport": true
+          "dynamicImport": true,
+          "swc": {
+            "jsc": {
+              "externalHelpers": false
+            }
+          }
         }
       ]
     },

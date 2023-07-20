@@ -8,7 +8,7 @@ import { ExecaSyncError } from "execa";
  * @param message The message to use in the error.
  * @returns A Semantic Release error instance.
  */
-export const convertExecaResultToSemanticReleaseError = (error: any, message: string): SemanticReleaseError => {
+export const convertExecaResultToSemanticReleaseError = (error: unknown, message: string): SemanticReleaseError => {
   if (error && Object.prototype.hasOwnProperty.call(error, "exitCode")) {
     const result = error as ExecaSyncError<string>;
 

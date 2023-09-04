@@ -1,9 +1,9 @@
 import execa from "execa";
-import { Config, Context } from "semantic-release";
+import { Config, PublishContext } from "semantic-release";
 import { convertExecaResultToSemanticReleaseError } from "./helper";
 import { UserConfig } from "./userConfig";
 
-export const publish = async (pluginConfig: Config & UserConfig, context: Context): Promise<void> => {
+export const publish = async (pluginConfig: Config & UserConfig, context: PublishContext): Promise<void> => {
   try {
     if (pluginConfig.uploadSourceMaps) {
       context.logger.log("Uploading source maps.");

@@ -1,6 +1,6 @@
 import execa from "execa";
 import path from "path";
-import { Config, Context } from "semantic-release";
+import { Config, VerifyConditionsContext } from "semantic-release";
 import { UserConfig } from "./userConfig";
 
 declare global {
@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-export const verify = async (pluginConfig: Config & UserConfig, context: Context): Promise<void> => {
+export const verify = async (pluginConfig: Config & UserConfig, context: VerifyConditionsContext): Promise<void> => {
   const errors = [];
   for (const envVar of ["SENTRY_AUTH_TOKEN"]) {
     if (!process.env[envVar]) {

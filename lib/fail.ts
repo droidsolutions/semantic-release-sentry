@@ -1,9 +1,9 @@
 import execa from "execa";
-import { Config, Context } from "semantic-release";
+import { Config, FailContext } from "semantic-release";
 import { convertExecaResultToSemanticReleaseError } from "./helper";
 import { UserConfig } from "./userConfig";
 
-export const fail = async (pluginConfig: Config & UserConfig, context: Context): Promise<void> => {
+export const fail = async (pluginConfig: Config & UserConfig, context: FailContext): Promise<void> => {
   try {
     await execa("node_modules/.bin/sentry-cli", ["releases", "delete", process.env["SENTRY_RELEASE_NAME"] as string], {
       stdio: "inherit",

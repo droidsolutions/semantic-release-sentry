@@ -1,3 +1,10 @@
+## [1.0.35](https://github.com/droidsolutions/semantic-release-sentry/compare/v1.0.34...v1.0.35) (2023-11-27)
+
+
+### Bug Fixes
+
+* **deps:** bump @sentry/cli from 2.21.5 to 2.22.2 ([303cc63](https://github.com/droidsolutions/semantic-release-sentry/commit/303cc631c5e53fe8940ed73abaea81715a29d62f))
+
 ## [1.0.34](https://github.com/droidsolutions/semantic-release-sentry/compare/v1.0.33...v1.0.34) (2023-11-16)
 
 

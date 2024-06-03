@@ -57,7 +57,7 @@
     "jest-circus": "29.7.0",
     "lint-staged": "15.2.5",
     "prettier": "3.3.0",
-    "semantic-release": "23.1.1",
+    "semantic-release": "24.0.0",
     "typescript": "5.4.5"
   },
   "lint-staged": {

@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@sentry/cli": "^2.6.0",
-    "execa": "^5.1.1"
+    "execa": "^9.3.0"
   },
   "devDependencies": {
     "@commitlint/cli": "19.3.0",

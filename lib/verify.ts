@@ -46,7 +46,7 @@ export const verify = async (pluginConfig: Config & UserConfig, context: VerifyC
 
   let packageName = pluginConfig.packageName || process.env["npm_package_name"];
   if (!packageName) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
     const pjson = require(path.resolve("package.json")) as { name: string };
     context.logger.log(`reading package name ${pjson.name} from package.json`);
     packageName = pjson.name;

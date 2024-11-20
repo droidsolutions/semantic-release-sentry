@@ -41,7 +41,7 @@
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@swc-node/jest": "1.8.12",
-    "@types/aggregate-error": "1.0.1",
+    "@types/aggregate-error": "2.2.3",
     "@types/jest": "29.5.14",
     "@types/node": "22.9.1",
     "@types/semantic-release": "20.0.6",

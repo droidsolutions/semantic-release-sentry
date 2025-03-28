@@ -9,7 +9,7 @@ updates:
       interval: weekly
       time: "04:00"
     assignees:
-      - "kampfmoehre"
+      - "Kampfmoehre"
   - directory: /
     groups:
       commitlint:
@@ -30,7 +30,7 @@ updates:
       interval: daily
       time: "04:00"
     assignees:
-      - "kampfmoehre"
+      - "Kampfmoehre"
     commit-message:
       prefix: "fix"
       prefix-development: "chore"

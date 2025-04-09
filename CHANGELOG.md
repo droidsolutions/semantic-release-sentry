@@ -1,3 +1,10 @@
+## [1.0.73](https://github.com/droidsolutions/semantic-release-sentry/compare/v1.0.72...v1.0.73) (2025-04-09)
+
+
+### Bug Fixes
+
+* add sr error package as dep ([3b1433d](https://github.com/droidsolutions/semantic-release-sentry/commit/3b1433da28e82e41c24ef728062b8519384a21ff))
+
 ## [1.0.72](https://github.com/droidsolutions/semantic-release-sentry/compare/v1.0.71...v1.0.72) (2025-03-28)
 
 

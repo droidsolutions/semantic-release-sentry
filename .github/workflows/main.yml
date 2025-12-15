@@ -15,6 +15,7 @@ jobs:
         run: npm ci --no-fund --ignore-scripts
       - name: Run ESLint
         run: npx eslint --ext .ts,.js .
+
   build:
     name: Transpile TypeScript
     runs-on: ubuntu-latest
@@ -33,6 +34,7 @@ jobs:
           path: |
             dist
             !dist/test
+
   test:
     name: Coverage with Node ${{ matrix.node }}
     runs-on: ubuntu-latest
@@ -50,9 +52,15 @@ jobs:
         run: npm ci --no-fund --ignore-scripts
       - name: Collect Coverage
         run: npx jest --coverage
+
   release:
     name: Semantic Release
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta')
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for trusted publishing and npm provenance
     runs-on: ubuntu-latest
     needs:
       - lint
@@ -66,6 +74,8 @@ jobs:
           node-version: 24
       - name: Install packages
         run: npm ci --no-fund --ignore-scripts
+      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+        run: npm audit signatures
       - name: Download dist from build
         uses: actions/download-artifact@v7
         with:
@@ -74,5 +84,5 @@ jobs:
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+         # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release

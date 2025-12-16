@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@semantic-release/error": "^4.0.0",
-    "@sentry/cli": "^2.6.0",
+    "@sentry/cli": "^3.0.0",
     "execa": "^5.1.1"
   },
   "devDependencies": {

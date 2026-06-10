@@ -1,11 +1,11 @@
 import { execa } from "execa";
 import { Config, FailContext } from "semantic-release";
-import { convertExecaResultToSemanticReleaseError } from "./helper.mjs";
+import { convertExecaResultToSemanticReleaseError, getSentryCliPath } from "./helper.mjs";
 import { UserConfig } from "./userConfig.mjs";
 
 export const fail = async (pluginConfig: Config & UserConfig, context: FailContext): Promise<void> => {
   try {
-    await execa("node_modules/.bin/sentry-cli", ["releases", "delete", process.env["SENTRY_RELEASE_NAME"] as string], {
+    await execa(getSentryCliPath(), ["releases", "delete", process.env["SENTRY_RELEASE_NAME"] as string], {
       stdio: "inherit",
     });
   } catch (err) {

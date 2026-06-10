@@ -1,6 +1,6 @@
 import { execa } from "execa";
 import { Config, PublishContext } from "semantic-release";
-import { convertExecaResultToSemanticReleaseError } from "./helper.mjs";
+import { convertExecaResultToSemanticReleaseError, getSentryCliPath } from "./helper.mjs";
 import { UserConfig } from "./userConfig.mjs";
 
 export const publish = async (pluginConfig: Config & UserConfig, context: PublishContext): Promise<void> => {
@@ -8,7 +8,7 @@ export const publish = async (pluginConfig: Config & UserConfig, context: Publis
     if (pluginConfig.uploadSourceMaps) {
       context.logger.log("Uploading source maps.");
       await execa(
-        "node_modules/.bin/sentry-cli",
+        getSentryCliPath(),
         [
           "sourcemaps",
           "upload",

@@ -1,5 +1,17 @@
 import SemanticReleaseError from "@semantic-release/error";
+import { SentryCli } from "@sentry/cli";
 import { ExecaError } from "execa";
+
+/**
+ * Resolves the absolute path to the bundled `sentry-cli` binary.
+ *
+ * Using `SentryCli.getPath()` instead of a hardcoded `node_modules/.bin` path
+ * ensures the binary is found regardless of the consumer's install layout
+ * (npm/Yarn hoisting, pnpm's nested store, Yarn PnP, monorepos).
+ *
+ * @returns The absolute path to the `sentry-cli` executable.
+ */
+export const getSentryCliPath = (): string => SentryCli.getPath();
 
 /**
  * Builds a Semantic Release error.

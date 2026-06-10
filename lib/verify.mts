@@ -2,6 +2,7 @@ import { execa } from "execa";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { Config, VerifyConditionsContext } from "semantic-release";
+import { getSentryCliPath } from "./helper.mjs";
 import { UserConfig } from "./userConfig.mjs";
 
 declare global {
@@ -55,7 +56,7 @@ export const verify = async (pluginConfig: Config & UserConfig, context: VerifyC
   process.env["RELEASE_NAME"] = packageName;
 
   try {
-    await execa("node_modules/.bin/sentry-cli", ["info"], { stdio: "inherit" });
+    await execa(getSentryCliPath(), ["info"], { stdio: "inherit" });
   } catch (err) {
     context.logger.error('Error running "sentry-cli info".', err);
     errors.push(new Error(`Unable to use Sentry CLI: ${(err as Error).message}`));

@@ -1,5 +1,7 @@
+import { execa } from "execa";
 import { VerifyConditionsContext } from "semantic-release";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { getSentryCliPath } from "../lib/helper.mjs";
 import { UserConfig } from "../lib/userConfig.mjs";
 import { verify } from "../lib/verify.mjs";
 
@@ -66,5 +68,13 @@ describe("verify", () => {
 
     expect(actualErr).toBeDefined();
     expect(actualErr?.errors[0].message).toBe("Environment variable SENTRY_AUTH_TOKEN is not set!");
+  });
+
+  it("runs sentry-cli at the path resolved by @sentry/cli, not a hardcoded node_modules path", async () => {
+    process.env.SENTRY_AUTH_TOKEN = "a10b2c3d4";
+
+    await verify({ sentryProject: "some-project", sentryOrg: "some-orga", packageName: "test" } as UserConfig, context);
+
+    expect(vi.mocked(execa)).toHaveBeenCalledWith(getSentryCliPath(), ["info"], { stdio: "inherit" });
   });
 });

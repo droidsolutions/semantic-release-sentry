@@ -2,7 +2,7 @@ import { execa } from "execa";
 import fs from "node:fs/promises";
 import { EOL } from "node:os";
 import { Config, PrepareContext } from "semantic-release";
-import { convertExecaResultToSemanticReleaseError } from "./helper.mjs";
+import { convertExecaResultToSemanticReleaseError, getSentryCliPath } from "./helper.mjs";
 import { UserConfig } from "./userConfig.mjs";
 
 export const prepare = async (pluginConfig: Config & UserConfig, context: PrepareContext): Promise<void> => {
@@ -13,13 +13,13 @@ export const prepare = async (pluginConfig: Config & UserConfig, context: Prepar
 
     context.logger.log(`Creating Sentry release for Project ${process.env["SENTRY_PROJECT"]} with name ${releaseName}`);
 
-    await execa("node_modules/.bin/sentry-cli", ["releases", "new", process.env["SENTRY_RELEASE_NAME"]], {
+    await execa(getSentryCliPath(), ["releases", "new", process.env["SENTRY_RELEASE_NAME"]], {
       stdio: "inherit",
     });
 
     context.logger.log("Assigning commit to new Sentry release.");
     await execa(
-      "node_modules/.bin/sentry-cli",
+      getSentryCliPath(),
       ["releases", "set-commits", process.env["SENTRY_RELEASE_NAME"] as string, "--auto"],
       { stdio: "inherit" },
     );

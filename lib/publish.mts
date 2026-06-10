@@ -1,4 +1,4 @@
-import execa from "execa";
+import { execa } from "execa";
 import { Config, PublishContext } from "semantic-release";
 import { convertExecaResultToSemanticReleaseError } from "./helper.mjs";
 import { UserConfig } from "./userConfig.mjs";

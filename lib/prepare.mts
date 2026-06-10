@@ -1,4 +1,4 @@
-import execa from "execa";
+import { execa } from "execa";
 import fs from "node:fs/promises";
 import { EOL } from "node:os";
 import { Config, PrepareContext } from "semantic-release";

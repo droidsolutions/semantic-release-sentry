@@ -1,6 +1,5 @@
 import js from "@eslint/js";
 import prettierRecommended from "eslint-plugin-prettier/recommended";
-import jestPlugin from "eslint-plugin-jest";
 import nodePlugin from "eslint-plugin-n";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -32,24 +31,6 @@ export default tseslint.config(
       // TypeScript resolves modules itself; eslint-plugin-n cannot reliably
       // follow extension/path resolution for .mts imports.
       "n/no-missing-import": "off",
-    },
-  },
-  // Test files run under Jest.
-  {
-    files: ["test/**/*.mts"],
-    ...jestPlugin.configs["flat/recommended"],
-  },
-  // CommonJS helpers (e.g. the Jest transformer shim) that must stay CJS.
-  {
-    files: ["**/*.cjs"],
-    languageOptions: {
-      sourceType: "commonjs",
-      globals: {
-        ...globals.node,
-      },
-    },
-    rules: {
-      "@typescript-eslint/no-require-imports": "off",
     },
   },
 );

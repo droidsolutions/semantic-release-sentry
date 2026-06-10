@@ -51,7 +51,7 @@ jobs:
       - name: Install packages
         run: npm ci --no-fund --ignore-scripts
       - name: Collect Coverage
-        run: npx jest --coverage
+        run: npx vitest run --coverage
 
   release:
     name: Semantic Release

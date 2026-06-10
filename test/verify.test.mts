@@ -1,17 +1,17 @@
 import { VerifyConditionsContext } from "semantic-release";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { UserConfig } from "../lib/userConfig.mjs";
 import { verify } from "../lib/verify.mjs";
 
-jest.mock("execa");
+vi.mock("execa");
 
 describe("verify", () => {
   let originalEnv: NodeJS.ProcessEnv;
   let context: VerifyConditionsContext;
-  // let execaMock: jest.Mock<ExecaReturnBase<string>, unknown[]>;
 
   beforeAll(() => {
     originalEnv = process.env;
-    const logMock = jest.fn<void, unknown[]>();
+    const logMock = vi.fn();
     context = {
       branch: { name: "main" },
       branches: [],
@@ -19,7 +19,6 @@ describe("verify", () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       logger: { log: logMock, error: logMock } as any,
     } as unknown as VerifyConditionsContext;
-    // execaMock = execa as unknown as jest.Mock<ExecaReturnBase<string>, unknown[]>;
   });
 
   afterAll(() => {

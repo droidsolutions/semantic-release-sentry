@@ -21,6 +21,8 @@
     "esModuleInterop": true,
 
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node"]
+  },
+  "exclude": ["dist", "coverage", "vitest.config.mts"]
 }

@@ -20,7 +20,7 @@ Just install the plugin with `npm install @droidsolutions-oss/semantic-release-s
 
 #### packageName
 
-If you don't give any configuration, the name from package.json will be used, along with the version number to create the release. If you like to use another name you can provide a `packageName` setting with the name you want to have. Be aware of the [name limitations](https://docs.sentry.io/workflow/releases/?platform=node#configure-sdk) Sentry gives in their docs.
+If you don't give any configuration, the name from package.json will be used, along with the version number to create the release. If you like to use another name you can provide a `packageName` setting with the name you want to have. Be aware of the [name limitations](https://docs.sentry.io/product/releases/naming-releases/) Sentry gives in their docs.
 
 #### uploadSourceMaps
 

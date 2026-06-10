@@ -1,3 +1,31 @@
+# [2.0.0-beta.1](https://github.com/droidsolutions/semantic-release-sentry/compare/v1.0.88...v2.0.0-beta.1) (2026-06-10)
+
+
+### Code Refactoring
+
+* migrate to ESM ([3b824cb](https://github.com/droidsolutions/semantic-release-sentry/commit/3b824cb966279d359f9c18dc1dc2d7996df2853e))
+
+
+### Features
+
+* **Sentry:** update @sentry/cli to 3.5.0 ([88380d1](https://github.com/droidsolutions/semantic-release-sentry/commit/88380d186433221e7f5d1aa61cc16f3b82dff514))
+* update to execa to v9 ([0899bdc](https://github.com/droidsolutions/semantic-release-sentry/commit/0899bdcd4b28e1f4d3a0c07b23ac9ae480e48f09))
+
+
+### BREAKING CHANGES
+
+* **Sentry:** major update of Sentry CLI
+
+Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
+* underlying execa had multiple major updates,
+but everything should still work, just to be sure
+
+Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
+* this plugin is now ESM,
+should still work with Semantic Release without problems
+
+Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
+
 ## [1.0.88](https://github.com/droidsolutions/semantic-release-sentry/compare/v1.0.87...v1.0.88) (2025-12-15)
 
 

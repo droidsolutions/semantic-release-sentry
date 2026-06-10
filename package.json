@@ -2,14 +2,22 @@
   "name": "@droidsolutions-oss/semantic-release-sentry",
   "version": "1.0.88",
   "description": "Semantic release plugin to create Sentry releases",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "type": "module",
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
   "files": [
     "dist/*"
   ],
   "scripts": {
     "lint": "eslint .",
-    "build": "tsc",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc",
     "test": "jest"
   },
   "keywords": [
@@ -63,8 +71,8 @@
     "typescript-eslint": "8.61.0"
   },
   "lint-staged": {
-    "*.[js,ts,json,md,yml]": "prettier --write",
-    "*.[js,ts]": "eslint"
+    "*.{js,mjs,ts,mts,json,md,yml}": "prettier --write",
+    "*.{js,mjs,ts,mts}": "eslint"
   },
   "commitlint": {
     "extends": [
@@ -96,7 +104,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "lib/**/*.ts"
+      "lib/**/*.mts"
     ],
     "coverageReporters": [
       "lcov",
@@ -104,14 +112,20 @@
       "text"
     ],
     "moduleFileExtensions": [
+      "mts",
+      "mjs",
       "js",
       "ts"
     ],
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.mjs$": "$1"
+    },
     "transform": {
-      "^.+\\.(t|j)sx?$": [
-        "@swc-node/jest",
+      "^.+\\.m?(t|j)sx?$": [
+        "<rootDir>/swc-jest-transformer.cjs",
         {
           "dynamicImport": true,
+          "module": "commonjs",
           "swc": {
             "jsc": {
               "externalHelpers": false
@@ -122,7 +136,7 @@
     },
     "testEnvironment": "node",
     "testMatch": null,
-    "testRegex": "test/.*\\.test.ts$",
+    "testRegex": "test/.*\\.test\\.mts$",
     "testRunner": "jest-circus/runner"
   }
 }

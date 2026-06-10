@@ -1,7 +1,7 @@
 import execa from "execa";
 import { Config, FailContext } from "semantic-release";
-import { convertExecaResultToSemanticReleaseError } from "./helper";
-import { UserConfig } from "./userConfig";
+import { convertExecaResultToSemanticReleaseError } from "./helper.mjs";
+import { UserConfig } from "./userConfig.mjs";
 
 export const fail = async (pluginConfig: Config & UserConfig, context: FailContext): Promise<void> => {
   try {

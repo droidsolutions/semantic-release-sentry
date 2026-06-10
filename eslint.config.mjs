@@ -12,17 +12,16 @@ export default tseslint.config(
   },
   js.configs.recommended,
   tseslint.configs.recommended,
-  // Sources are run by Node. They are authored with ES module syntax (compiled
-  // by TypeScript) and the package will be converted to ESM in the future, so
-  // lint against the module preset.
+  // Sources are authored as ES modules (.mts, compiled by TypeScript), so lint
+  // against the module preset.
   nodePlugin.configs["flat/recommended-module"],
   // Keep eslint-config-prettier + eslint-plugin-prettier last so formatting
   // rules win over any stylistic rules enabled above.
   prettierRecommended,
   {
-    files: ["**/*.ts", "**/*.js"],
+    files: ["**/*.{ts,mts,js,mjs}"],
     languageOptions: {
-      ecmaVersion: 2021,
+      ecmaVersion: 2022,
       sourceType: "module",
       globals: {
         ...globals.node,
@@ -31,13 +30,26 @@ export default tseslint.config(
     rules: {
       "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
       // TypeScript resolves modules itself; eslint-plugin-n cannot reliably
-      // follow extension/path resolution for .ts imports.
+      // follow extension/path resolution for .mts imports.
       "n/no-missing-import": "off",
     },
   },
   // Test files run under Jest.
   {
-    files: ["test/**/*.ts"],
+    files: ["test/**/*.mts"],
     ...jestPlugin.configs["flat/recommended"],
+  },
+  // CommonJS helpers (e.g. the Jest transformer shim) that must stay CJS.
+  {
+    files: ["**/*.cjs"],
+    languageOptions: {
+      sourceType: "commonjs",
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
   },
 );

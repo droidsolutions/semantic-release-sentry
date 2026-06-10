@@ -1,7 +1,7 @@
 import execa from "execa";
 import { Config, PublishContext } from "semantic-release";
-import { convertExecaResultToSemanticReleaseError } from "./helper";
-import { UserConfig } from "./userConfig";
+import { convertExecaResultToSemanticReleaseError } from "./helper.mjs";
+import { UserConfig } from "./userConfig.mjs";
 
 export const publish = async (pluginConfig: Config & UserConfig, context: PublishContext): Promise<void> => {
   try {

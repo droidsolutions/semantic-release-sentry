@@ -1,7 +1,8 @@
 import execa from "execa";
-import path from "path";
+import fs from "node:fs/promises";
+import path from "node:path";
 import { Config, VerifyConditionsContext } from "semantic-release";
-import { UserConfig } from "./userConfig";
+import { UserConfig } from "./userConfig.mjs";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -46,8 +47,7 @@ export const verify = async (pluginConfig: Config & UserConfig, context: VerifyC
 
   let packageName = pluginConfig.packageName || process.env["npm_package_name"];
   if (!packageName) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const pjson = require(path.resolve("package.json")) as { name: string };
+    const pjson = JSON.parse(await fs.readFile(path.resolve("package.json"), "utf8")) as { name: string };
     context.logger.log(`reading package name ${pjson.name} from package.json`);
     packageName = pjson.name;
   }

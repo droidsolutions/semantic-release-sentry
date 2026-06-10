@@ -1,6 +1,6 @@
 import { VerifyConditionsContext } from "semantic-release";
-import { UserConfig } from "../lib/userConfig";
-import { verify } from "../lib/verify";
+import { UserConfig } from "../lib/userConfig.mjs";
+import { verify } from "../lib/verify.mjs";
 
 jest.mock("execa");
 

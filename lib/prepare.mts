@@ -1,9 +1,9 @@
 import execa from "execa";
-import fs from "fs/promises";
-import { EOL } from "os";
+import fs from "node:fs/promises";
+import { EOL } from "node:os";
 import { Config, PrepareContext } from "semantic-release";
-import { convertExecaResultToSemanticReleaseError } from "./helper";
-import { UserConfig } from "./userConfig";
+import { convertExecaResultToSemanticReleaseError } from "./helper.mjs";
+import { UserConfig } from "./userConfig.mjs";
 
 export const prepare = async (pluginConfig: Config & UserConfig, context: PrepareContext): Promise<void> => {
   try {

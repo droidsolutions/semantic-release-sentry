@@ -124,5 +124,10 @@
     "testMatch": null,
     "testRegex": "test/.*\\.test.ts$",
     "testRunner": "jest-circus/runner"
+  },
+  "allowScripts": {
+    "@sentry/cli@2.58.4": true,
+    "@swc/core@1.15.46": true,
+    "unrs-resolver@1.9.0": true
   }
 }

@@ -1,39 +1,18 @@
 import { execa } from "execa";
-import fs from "node:fs/promises";
-import path from "node:path";
-import { Config, VerifyConditionsContext } from "semantic-release";
+import { VerifyConditionsContext } from "semantic-release";
 import { getSentryCliPath } from "./helper.mjs";
+import { loadTargets, resolveOrg } from "./targets.mjs";
 import { UserConfig } from "./userConfig.mjs";
+import "./processEnv.mjs";
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace NodeJS {
-    interface ProcessEnv {
-      SENTRY_URL: string | undefined;
-      SENTRY_AUTH_TOKEN: string | undefined;
-    }
-  }
-}
+export const verify = async (pluginConfig: UserConfig, context: VerifyConditionsContext): Promise<void> => {
+  const errors: Error[] = [];
 
-export const verify = async (pluginConfig: Config & UserConfig, context: VerifyConditionsContext): Promise<void> => {
-  const errors = [];
-  for (const envVar of ["SENTRY_AUTH_TOKEN"]) {
-    if (!process.env[envVar]) {
-      errors.push(new Error(`Environment variable ${envVar} is not set!`));
-    }
+  if (!process.env.SENTRY_AUTH_TOKEN) {
+    errors.push(new Error("Environment variable SENTRY_AUTH_TOKEN is not set!"));
   }
 
-  const sentryProject: string | undefined = pluginConfig.sentryProject ?? process.env["SENTRY_PROJECT"];
-  if (!sentryProject) {
-    errors.push(
-      new Error(
-        "No Sentry project is set, either set it via sentryProject config or SENTRY_PROJECT environment variable.",
-      ),
-    );
-  }
-
-  const sentryOrg: string | undefined = pluginConfig.sentryOrg ?? process.env["SENTRY_ORG"];
-  if (!sentryOrg) {
+  if (!resolveOrg(pluginConfig)) {
     errors.push(
       new Error(
         "No Sentry organisation is set, either set it via sentryOrg config or SENTRY_ORG environment variable.",
@@ -41,19 +20,34 @@ export const verify = async (pluginConfig: Config & UserConfig, context: VerifyC
     );
   }
 
-  const sentryUrl: string | undefined = process.env.SENTRY_URL ?? pluginConfig.sentryUrl ?? "https://sentry.io.";
-
-  // set Sentry url for CLI
-  process.env.SENTRY_URL = sentryUrl;
-
-  let packageName = pluginConfig.packageName || process.env["npm_package_name"];
-  if (!packageName) {
-    const pjson = JSON.parse(await fs.readFile(path.resolve("package.json"), "utf8")) as { name: string };
-    context.logger.log(`reading package name ${pjson.name} from package.json`);
-    packageName = pjson.name;
+  // Only export a URL that was actually asked for. Without one the Sentry CLI falls back to its own
+  // default and to any ~/.sentryclirc the user may have.
+  const sentryUrl = pluginConfig.sentryUrl ?? process.env.SENTRY_URL;
+  if (sentryUrl) {
+    process.env.SENTRY_URL = sentryUrl;
   }
 
-  process.env["RELEASE_NAME"] = packageName;
+  const targets = await loadTargets(pluginConfig, context.logger);
+
+  for (const target of targets) {
+    if (target.sentryProjects.length === 0) {
+      errors.push(
+        new Error(
+          `No Sentry project is set for release ${target.packageName ?? "<unnamed>"}, either set it via ` +
+            "sentryProject config or SENTRY_PROJECT environment variable.",
+        ),
+      );
+    }
+
+    if (!target.packageName) {
+      errors.push(
+        new Error(
+          `No release name could be resolved for project ${target.sentryProjects.join(", ")}, set it via ` +
+            "packageName config.",
+        ),
+      );
+    }
+  }
 
   try {
     await execa(getSentryCliPath(), ["info"], { stdio: "inherit" });

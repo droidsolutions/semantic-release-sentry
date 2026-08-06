@@ -1,32 +1,31 @@
 import { execa } from "execa";
-import { Config, PublishContext } from "semantic-release";
-import { convertExecaResultToSemanticReleaseError, getSentryCliPath } from "./helper.mjs";
+import { PublishContext } from "semantic-release";
+import { getSentryCliPath } from "./helper.mjs";
+import { runForEachTarget } from "./runTargets.mjs";
+import { loadTargets, releaseName, resolveOrg, targetArgs } from "./targets.mjs";
 import { UserConfig } from "./userConfig.mjs";
 
-export const publish = async (pluginConfig: Config & UserConfig, context: PublishContext): Promise<void> => {
-  try {
-    if (pluginConfig.uploadSourceMaps) {
-      context.logger.log("Uploading source maps.");
+export const publish = async (pluginConfig: UserConfig, context: PublishContext): Promise<void> => {
+  const version = context.nextRelease.version;
+  const targets = (await loadTargets(pluginConfig, context.logger)).filter((target) => target.uploadSourceMaps);
+  const org = resolveOrg(pluginConfig);
+
+  await runForEachTarget(
+    targets,
+    {
+      allowSentryFailure: pluginConfig.allowSentryFailure ?? false,
+      logger: context.logger,
+      message: "Failed to upload source maps",
+    },
+    async (target) => {
+      const name = releaseName(target, version);
+
+      context.logger.log(`Uploading source maps from ${target.sources} for Sentry release ${name}.`);
       await execa(
         getSentryCliPath(),
-        [
-          "sourcemaps",
-          "upload",
-          "--release",
-          process.env["SENTRY_RELEASE_NAME"] as string,
-          pluginConfig.sources || "dist",
-        ],
+        ["sourcemaps", "upload", "--release", name, target.sources, ...targetArgs(org, target)],
         { stdio: "inherit" },
       );
-    }
-  } catch (err) {
-    context.logger.error("fail", err);
-
-    if (pluginConfig.allowSentryFailure) {
-      context.logger.log(`Sentry publish failed, but this is allowed by config. Err: ${(err as Error).message}`);
-      return;
-    }
-
-    throw convertExecaResultToSemanticReleaseError(err, "Failed to publish Sentry release.");
-  }
+    },
+  );
 };

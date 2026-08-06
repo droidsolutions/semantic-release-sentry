@@ -1,36 +1,35 @@
 import { execa } from "execa";
-import fs from "node:fs/promises";
-import { EOL } from "node:os";
-import { Config, PrepareContext } from "semantic-release";
-import { convertExecaResultToSemanticReleaseError, getSentryCliPath } from "./helper.mjs";
+import { PrepareContext } from "semantic-release";
+import { getSentryCliPath } from "./helper.mjs";
+import { releaseEnvKey, writeReleaseEnv } from "./releaseEnv.mjs";
+import { runForEachTarget } from "./runTargets.mjs";
+import { loadTargets, releaseName, resolveOrg, targetArgs } from "./targets.mjs";
 import { UserConfig } from "./userConfig.mjs";
 
-export const prepare = async (pluginConfig: Config & UserConfig, context: PrepareContext): Promise<void> => {
-  try {
-    const releaseName = `${process.env["RELEASE_NAME"] as string}@${context.nextRelease?.version as string}`;
-    process.env["SENTRY_RELEASE_NAME"] = releaseName;
-    await fs.appendFile("build.env", `SENTRY_RELEASE_NAME=${releaseName}${EOL}`);
+export const prepare = async (pluginConfig: UserConfig, context: PrepareContext): Promise<void> => {
+  const version = context.nextRelease.version;
+  const targets = await loadTargets(pluginConfig, context.logger);
+  const org = resolveOrg(pluginConfig);
 
-    context.logger.log(`Creating Sentry release for Project ${process.env["SENTRY_PROJECT"]} with name ${releaseName}`);
+  await runForEachTarget(
+    targets,
+    {
+      allowSentryFailure: pluginConfig.allowSentryFailure ?? false,
+      logger: context.logger,
+      message: "Failed to create Sentry release",
+    },
+    async (target) => {
+      const name = releaseName(target, version);
+      const args = targetArgs(org, target);
 
-    await execa(getSentryCliPath(), ["releases", "new", process.env["SENTRY_RELEASE_NAME"]], {
-      stdio: "inherit",
-    });
+      context.logger.log(`Creating Sentry release ${name} for project ${target.sentryProjects.join(", ")}.`);
+      await execa(getSentryCliPath(), ["releases", "new", name, ...args], { stdio: "inherit" });
 
-    context.logger.log("Assigning commit to new Sentry release.");
-    await execa(
-      getSentryCliPath(),
-      ["releases", "set-commits", process.env["SENTRY_RELEASE_NAME"] as string, "--auto"],
-      { stdio: "inherit" },
-    );
-  } catch (err) {
-    context.logger.error("fail", err);
+      // Only now that the release exists, so the fail step never tries to delete one that does not.
+      await writeReleaseEnv([[releaseEnvKey(targets, target), name]], pluginConfig.envFile ?? "build.env");
 
-    if (pluginConfig.allowSentryFailure) {
-      context.logger.log(`Sentry verify failed, but this is allowed by config. Err: ${(err as Error).message}`);
-      return;
-    }
-
-    throw convertExecaResultToSemanticReleaseError(err, "Failed to create Sentry release");
-  }
+      context.logger.log(`Assigning commits to Sentry release ${name}.`);
+      await execa(getSentryCliPath(), ["releases", "set-commits", name, "--auto", ...args], { stdio: "inherit" });
+    },
+  );
 };

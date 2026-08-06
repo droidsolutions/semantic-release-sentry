@@ -1,6 +1,6 @@
 import { execa } from "execa";
 import { VerifyConditionsContext } from "semantic-release";
-import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { getSentryCliPath } from "../lib/helper.mjs";
 import { UserConfig } from "../lib/userConfig.mjs";
 import { verify } from "../lib/verify.mjs";
@@ -12,7 +12,6 @@ describe("verify", () => {
   let context: VerifyConditionsContext;
 
   beforeAll(() => {
-    originalEnv = process.env;
     const logMock = vi.fn();
     context = {
       branch: { name: "main" },
@@ -23,7 +22,14 @@ describe("verify", () => {
     } as unknown as VerifyConditionsContext;
   });
 
-  afterAll(() => {
+  beforeEach(() => {
+    originalEnv = { ...process.env };
+    delete process.env.SENTRY_URL;
+    delete process.env.SENTRY_ORG;
+    delete process.env.SENTRY_PROJECT;
+  });
+
+  afterEach(() => {
     process.env = originalEnv;
   });
 
@@ -38,7 +44,8 @@ describe("verify", () => {
 
     expect(actualErr).toBeDefined();
     expect(actualErr?.errors[0].message).toBe(
-      "No Sentry project is set, either set it via sentryProject config or SENTRY_PROJECT environment variable.",
+      "No Sentry project is set for release @droidsolutions-oss/semantic-release-sentry, either set it via " +
+        "sentryProject config or SENTRY_PROJECT environment variable.",
     );
   });
 
@@ -76,5 +83,49 @@ describe("verify", () => {
     await verify({ sentryProject: "some-project", sentryOrg: "some-orga", packageName: "test" } as UserConfig, context);
 
     expect(vi.mocked(execa)).toHaveBeenCalledWith(getSentryCliPath(), ["info"], { stdio: "inherit" });
+  });
+
+  it("prefers the configured Sentry URL over the environment variable", async () => {
+    process.env.SENTRY_AUTH_TOKEN = "a10b2c3d4";
+    process.env.SENTRY_URL = "https://from-env.example.com";
+
+    await verify(
+      {
+        sentryProject: "some-project",
+        sentryOrg: "some-orga",
+        packageName: "test",
+        sentryUrl: "https://from-config.example.com",
+      } as UserConfig,
+      context,
+    );
+
+    expect(process.env.SENTRY_URL).toBe("https://from-config.example.com");
+  });
+
+  it("leaves SENTRY_URL untouched when neither config nor environment sets one", async () => {
+    process.env.SENTRY_AUTH_TOKEN = "a10b2c3d4";
+
+    await verify({ sentryProject: "some-project", sentryOrg: "some-orga", packageName: "test" } as UserConfig, context);
+
+    expect(process.env.SENTRY_URL).toBeUndefined();
+  });
+
+  it("reports the release that is missing a project when several are configured", async () => {
+    process.env.SENTRY_AUTH_TOKEN = "a10b2c3d4";
+    let actualErr: AggregateError | undefined;
+    try {
+      await verify(
+        {
+          sentryOrg: "some-orga",
+          releases: [{ packageName: "my-app-api", sentryProject: "api" }, { packageName: "my-app-worker" }],
+        } as UserConfig,
+        context,
+      );
+    } catch (err) {
+      actualErr = err as AggregateError;
+    }
+
+    expect(actualErr?.errors).toHaveLength(1);
+    expect(actualErr?.errors[0].message).toContain("my-app-worker");
   });
 });

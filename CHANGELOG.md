@@ -1,3 +1,22 @@
+# [2.0.0-beta.2](https://github.com/droidsolutions/semantic-release-sentry/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2026-08-06)
+
+
+### chore
+
+* update engines ([a11da89](https://github.com/droidsolutions/semantic-release-sentry/commit/a11da8956f95f35a02b44ae5b7d5e6254252da96))
+
+
+### Features
+
+* allow release for multiple sentry projects per repo ([93bc204](https://github.com/droidsolutions/semantic-release-sentry/commit/93bc204bab5a356e5921e459e2b70250adc07ead))
+* **deps:** update @sentry/cli to 3.6.2 ([4c1591a](https://github.com/droidsolutions/semantic-release-sentry/commit/4c1591ad765ffe14ba8149af2aef10b7cc8a3bec))
+
+
+### BREAKING CHANGES
+
+* allowed engines constrained to ^22.14.0 or >= 24.10.0
+to align with Semantic Release
+
 # [2.0.0-beta.1](https://github.com/droidsolutions/semantic-release-sentry/compare/v1.0.88...v2.0.0-beta.1) (2026-06-10)
 
 

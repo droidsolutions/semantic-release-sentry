@@ -8,9 +8,9 @@ jobs:
     name: Check - Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Use NodeJS
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
       - name: Install packages
         run: npm ci --no-fund --ignore-scripts
       - name: Run ESLint
@@ -20,9 +20,9 @@ jobs:
     name: Transpile TypeScript
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Use NodeJS
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
       - name: Install packages
         run: npm ci --no-fund --ignore-scripts
       - name: Run ESLint
@@ -43,9 +43,9 @@ jobs:
       matrix:
         node: ["24", "26"]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Use NodeJS
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node }}
       - name: Install packages
@@ -67,9 +67,9 @@ jobs:
       - build
       - test
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Use NodeJS
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24
       - name: Install packages

@@ -12,7 +12,7 @@ jobs:
       - name: Use NodeJS
         uses: actions/setup-node@v7
       - name: Install packages
-        run: npm ci --no-fund --ignore-scripts
+        run: npm ci --no-fund --strict-allow-scripts
       - name: Run ESLint
         run: npx eslint .
 
@@ -24,7 +24,7 @@ jobs:
       - name: Use NodeJS
         uses: actions/setup-node@v7
       - name: Install packages
-        run: npm ci --no-fund --ignore-scripts
+        run: npm ci --no-fund --strict-allow-scripts
       - name: Run ESLint
         run: npx tsc
       - name: Upload artifacts
@@ -49,7 +49,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Install packages
-        run: npm ci --no-fund --ignore-scripts
+        run: npm ci --no-fund --strict-allow-scripts
       - name: Collect Coverage
         run: npx vitest run --coverage
 
@@ -73,7 +73,7 @@ jobs:
         with:
           node-version: 24
       - name: Install packages
-        run: npm ci --no-fund --ignore-scripts
+        run: npm ci --no-fund --strict-allow-scripts
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
       - name: Download dist from build

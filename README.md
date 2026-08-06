@@ -46,9 +46,12 @@ npm install --save-dev @droidsolutions-oss/semantic-release-sentry
 }
 ```
 
-The Sentry CLI ships as a binary that is fetched by a postinstall script, so installs that disable
-scripts wholesale need to allow it — for example `npm ci --strict-allow-scripts` together with an
-`allowScripts` entry for `@sentry/cli`.
+The Sentry CLI is a native binary, delivered by `@sentry/cli` as a set of platform specific
+`optionalDependencies`. Installing with optional dependencies disabled — `--no-optional`,
+`--omit=optional` or `--ignore-optional` — leaves no binary for your platform, and the plugin has
+nothing to run. `@sentry/cli` does have a postinstall script, but since version 3 it is only a
+fallback that downloads the binary from the Sentry CDN when the optional dependency is missing;
+`--ignore-scripts` on its own is harmless.
 
 ### Authentication
 

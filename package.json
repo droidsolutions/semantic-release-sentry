@@ -105,6 +105,7 @@
   "allowScripts": {
     "@sentry/cli": true,
     "@swc/core": true,
+    "fsevents": true,
     "unrs-resolver": true
   }
 }

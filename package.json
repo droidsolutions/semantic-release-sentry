@@ -15,6 +15,7 @@
     "dist/*"
   ],
   "scripts": {
+    "prepare": "husky",
     "lint": "eslint .",
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "build": "npm run clean && tsc",
@@ -78,12 +79,6 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
   },
   "release": {
     "branches": [

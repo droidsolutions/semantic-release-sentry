@@ -3,6 +3,11 @@ name: main
 on:
   push:
 
+# Git hooks are a local development aid and have no place in CI. Disabling them also keeps
+# lint-staged away from the commit @semantic-release/git creates, which stages generated files.
+env:
+  HUSKY: "0"
+
 jobs:
   lint:
     name: Check - Lint

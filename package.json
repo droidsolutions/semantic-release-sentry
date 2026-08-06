@@ -39,7 +39,7 @@
     "access": "public"
   },
   "engines": {
-    "node": "^18.19.0 || >=20.5.0"
+    "node": "^22.14.0 || >=24.10.0"
   },
   "dependencies": {
     "@semantic-release/error": "^4.0.0",

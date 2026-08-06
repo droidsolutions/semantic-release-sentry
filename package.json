@@ -103,8 +103,8 @@
     ]
   },
   "allowScripts": {
-    "@sentry/cli@2.58.4": true,
-    "@swc/core@1.15.46": true,
-    "unrs-resolver@1.9.0": true
+    "@sentry/cli": true,
+    "@swc/core": true,
+    "unrs-resolver": true
   }
 }

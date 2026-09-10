@@ -34,6 +34,7 @@ export const resolveTargets = (pluginConfig: UserConfig, defaults: TargetDefault
     packageName: config.packageName ?? pluginConfig.packageName ?? defaults.packageName,
     sentryProjects: toProjectList(config.sentryProject ?? pluginConfig.sentryProject ?? defaults.sentryProject),
     uploadSourceMaps: config.uploadSourceMaps ?? pluginConfig.uploadSourceMaps ?? false,
+    injectDebugIds: config.injectDebugIds ?? pluginConfig.injectDebugIds ?? false,
     sources: config.sources ?? pluginConfig.sources ?? "dist",
   }));
 };

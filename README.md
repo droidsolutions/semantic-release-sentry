@@ -18,7 +18,7 @@ It hooks into four Semantic Release steps and drives the bundled
 | Step               | What happens                                                                                                                                               |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `verifyConditions` | Checks the auth token, organisation and project are all resolvable, and that the Sentry CLI can reach the instance, before Semantic Release does any work. |
-| `prepare`          | Creates the release and attaches the commits since the previous one, so Sentry can work out suspect commits.                                               |
+| `prepare`          | Creates the release and attaches the commits since the previous one, so Sentry can work out suspect commits. Injects debug ids, if you asked for them.     |
 | `publish`          | Uploads source maps, if you asked for them.                                                                                                                |
 | `success`          | Finalizes the release, marking it as released.                                                                                                             |
 | `fail`             | Deletes the releases that were created, so a failed run leaves nothing half-created behind.                                                                |
@@ -107,10 +107,28 @@ and then to the `name` field of the package.json in the working directory.
 Off by default. Set it to `true` to upload source maps for the release, which is what makes
 stack traces readable for JavaScript and TypeScript projects.
 
+### injectDebugIds
+
+Off by default. Set it to `true` to have the Sentry CLI inject debug ids into the built files in
+[`sources`](#sources) before they are packed. It rewrites the JavaScript files and their source maps
+in place so both carry the same id, which is what lets Sentry match a stack trace to the right
+source map even when the release name is not known at runtime.
+
+This runs during `prepare` rather than alongside the upload, because by the time `publish` comes
+around a plugin listed earlier, such as `@semantic-release/npm`, may already have packed the files.
+Injecting first means the artifact that ships and the source maps that are uploaded agree.
+
+It buys nothing where the artifact that actually ships is compiled again later — a container build
+that runs its own `npm run build`, for example — because that discards the rewritten files. In that
+case the injection has to happen inside that build instead.
+
+Injecting without also enabling [`uploadSourceMaps`](#uploadsourcemaps) leaves the ids in your files
+with no source maps in Sentry to match them against, so the two are normally enabled together.
+
 ### sources
 
-Directory the source maps are read from. Defaults to `dist`. Only used when `uploadSourceMaps` is
-enabled.
+Directory the source maps are read from, and the directory debug ids are injected into. Defaults to
+`dist`. Only used when `uploadSourceMaps` or `injectDebugIds` is enabled.
 
 ### allowSentryFailure
 
@@ -158,10 +176,13 @@ builds several separately deployed applications, each reporting to its own Sentr
 ```
 
 Every step then runs once per entry, so the example above creates, links, finalizes or deletes three
-releases that share a version but not a name.
+releases that share a version but not a name. Debug id injection is the exception: it rewrites a
+directory rather than a release, so releases built into the same `sources` directory are injected
+once between them rather than once each.
 
-Each entry may set `packageName`, `sentryProject`, `uploadSourceMaps` and `sources`. Anything an
-entry leaves out is inherited from the top level, so shared settings only need saying once:
+Each entry may set `packageName`, `sentryProject`, `uploadSourceMaps`, `injectDebugIds` and
+`sources`. Anything an entry leaves out is inherited from the top level, so shared settings only
+need saying once:
 
 ```json
 {

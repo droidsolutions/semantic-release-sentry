@@ -19,6 +19,17 @@ export interface ReleaseConfig {
   /** Whether source maps should be uploaded for this release. Defaults to `false`. */
   uploadSourceMaps?: boolean;
 
+  /**
+   * Whether debug ids should be injected into the built files of this release. The Sentry CLI
+   * rewrites the JavaScript files and their source maps in {@link sources} to carry matching ids,
+   * which is what lets Sentry resolve a stack trace to the original source. Defaults to `false`.
+   *
+   * Injection happens during the prepare step, so the files are already rewritten by the time
+   * anything packs or publishes them. It buys nothing when the artifact that ships is compiled
+   * again later, for example inside a container build, since that discards the rewritten files.
+   */
+  injectDebugIds?: boolean;
+
   /** Directory the source maps are read from. Defaults to `dist`. */
   sources?: string;
 }
@@ -58,6 +69,8 @@ export interface ReleaseTarget {
   sentryProjects: string[];
 
   uploadSourceMaps: boolean;
+
+  injectDebugIds: boolean;
 
   sources: string;
 }

@@ -6,6 +6,7 @@ const target = (overrides: Partial<ReleaseTarget> = {}): ReleaseTarget => ({
   packageName: "my-app",
   sentryProjects: ["my-project"],
   uploadSourceMaps: false,
+  injectDebugIds: false,
   sources: "dist",
   ...overrides,
 });
@@ -15,7 +16,13 @@ describe("resolveTargets", () => {
     const targets = resolveTargets({ packageName: "my-app", sentryProject: "my-project" } as UserConfig, {});
 
     expect(targets).toEqual([
-      { packageName: "my-app", sentryProjects: ["my-project"], uploadSourceMaps: false, sources: "dist" },
+      {
+        packageName: "my-app",
+        sentryProjects: ["my-project"],
+        uploadSourceMaps: false,
+        injectDebugIds: false,
+        sources: "dist",
+      },
     ]);
   });
 
@@ -47,9 +54,33 @@ describe("resolveTargets", () => {
     );
 
     expect(targets).toEqual([
-      { packageName: "my-app", sentryProjects: ["api"], uploadSourceMaps: true, sources: "build" },
-      { packageName: "my-app", sentryProjects: ["worker"], uploadSourceMaps: true, sources: "worker-build" },
+      {
+        packageName: "my-app",
+        sentryProjects: ["api"],
+        uploadSourceMaps: true,
+        injectDebugIds: false,
+        sources: "build",
+      },
+      {
+        packageName: "my-app",
+        sentryProjects: ["worker"],
+        uploadSourceMaps: true,
+        injectDebugIds: false,
+        sources: "worker-build",
+      },
     ]);
+  });
+
+  it("lets a releases entry inherit and override whether debug ids are injected", () => {
+    const targets = resolveTargets(
+      {
+        injectDebugIds: true,
+        releases: [{ sentryProject: "api" }, { sentryProject: "worker", injectDebugIds: false }],
+      } as UserConfig,
+      { packageName: "my-app" },
+    );
+
+    expect(targets.map((t) => t.injectDebugIds)).toEqual([true, false]);
   });
 
   it("attaches a single release to every project when sentryProject is an array", () => {

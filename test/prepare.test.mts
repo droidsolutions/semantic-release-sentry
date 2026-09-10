@@ -180,6 +180,118 @@ describe("prepare", () => {
     expect(process.env["SENTRY_RELEASE_NAME_MY_APP_WORKER"]).toBe("my-app-worker@1.2.3");
   });
 
+  it("does not inject debug ids unless a release asks for it", async () => {
+    await prepare(
+      { packageName: "my-app", sentryProject: "my-project", uploadSourceMaps: true, envFile: false } as UserConfig,
+      context,
+    );
+
+    expect(cliCalls().some((args) => args.includes("inject"))).toBe(false);
+  });
+
+  it("injects debug ids into the sources of a release that asks for it", async () => {
+    await prepare(
+      {
+        packageName: "my-app",
+        sentryProject: "my-project",
+        injectDebugIds: true,
+        sources: "build",
+        envFile: false,
+      } as UserConfig,
+      context,
+    );
+
+    expect(cliCalls()).toContainEqual(["sourcemaps", "inject", "build"]);
+  });
+
+  it("injects only once into a directory several releases share", async () => {
+    await prepare(
+      {
+        sentryProject: "my-project",
+        injectDebugIds: true,
+        envFile: false,
+        releases: [{ packageName: "my-app-api" }, { packageName: "my-app-worker" }],
+      } as UserConfig,
+      context,
+    );
+
+    expect(cliCalls().filter((args) => args.includes("inject"))).toEqual([["sourcemaps", "inject", "dist"]]);
+  });
+
+  it("injects into every distinct sources directory", async () => {
+    await prepare(
+      {
+        sentryProject: "my-project",
+        injectDebugIds: true,
+        envFile: false,
+        releases: [
+          { packageName: "my-app-api", sources: "api/dist" },
+          { packageName: "my-app-worker", sources: "worker/dist" },
+        ],
+      } as UserConfig,
+      context,
+    );
+
+    expect(cliCalls().filter((args) => args.includes("inject"))).toEqual([
+      ["sourcemaps", "inject", "api/dist"],
+      ["sourcemaps", "inject", "worker/dist"],
+    ]);
+  });
+
+  it("leaves the sources of a release that did not opt in untouched", async () => {
+    await prepare(
+      {
+        sentryProject: "my-project",
+        envFile: false,
+        releases: [
+          { packageName: "my-app-api", sources: "api/dist", injectDebugIds: true },
+          { packageName: "my-app-worker", sources: "worker/dist" },
+        ],
+      } as UserConfig,
+      context,
+    );
+
+    expect(cliCalls().filter((args) => args.includes("inject"))).toEqual([["sourcemaps", "inject", "api/dist"]]);
+  });
+
+  it("fails the release when debug ids could not be injected", async () => {
+    vi.mocked(execa).mockImplementation((_bin, args) => {
+      if ((args as string[]).includes("inject")) {
+        return Promise.reject(new Error("no js files found")) as never;
+      }
+      return Promise.resolve({}) as never;
+    });
+
+    await expect(
+      prepare(
+        { packageName: "my-app", sentryProject: "my-project", injectDebugIds: true, envFile: false } as UserConfig,
+        context,
+      ),
+    ).rejects.toThrow();
+  });
+
+  it("swallows an injection failure when Sentry failures are allowed", async () => {
+    vi.mocked(execa).mockImplementation((_bin, args) => {
+      if ((args as string[]).includes("inject")) {
+        return Promise.reject(new Error("no js files found")) as never;
+      }
+      return Promise.resolve({}) as never;
+    });
+
+    await expect(
+      prepare(
+        {
+          packageName: "my-app",
+          sentryProject: "my-project",
+          injectDebugIds: true,
+          allowSentryFailure: true,
+          envFile: false,
+        } as UserConfig,
+        context,
+      ),
+    ).resolves.toBeUndefined();
+  });
+
   it("attempts every release and aggregates the failures", async () => {
     vi.mocked(execa).mockImplementation((_bin, args) => {
       if ((args as string[]).includes("api")) {

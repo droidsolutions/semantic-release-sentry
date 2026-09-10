@@ -2,7 +2,7 @@ import { execa } from "execa";
 import { PrepareContext } from "semantic-release";
 import { getSentryCliPath } from "./helper.mjs";
 import { assertUniqueEnvKeys, releaseEnvKey, releasesEnvEntry, writeReleaseEnv } from "./releaseEnv.mjs";
-import { runForEachTarget } from "./runTargets.mjs";
+import { runForEach, runForEachTarget } from "./runTargets.mjs";
 import { loadTargets, releaseName, resolveOrg, targetArgs } from "./targets.mjs";
 import { UserConfig } from "./userConfig.mjs";
 
@@ -47,4 +47,22 @@ export const prepare = async (pluginConfig: UserConfig, context: PrepareContext)
   if (created.length > 0) {
     await writeReleaseEnv([releasesEnvEntry(created)], envFile);
   }
+
+  // Injection rewrites a directory rather than a release, and several releases may well be built
+  // into one, so this runs per distinct directory instead of per release.
+  const injectPaths = [...new Set(targets.filter((target) => target.injectDebugIds).map((target) => target.sources))];
+
+  await runForEach(
+    injectPaths,
+    {
+      allowSentryFailure: pluginConfig.allowSentryFailure ?? false,
+      logger: context.logger,
+      message: "Failed to inject debug ids",
+      describe: (sources) => `source maps in ${sources}`,
+    },
+    async (sources) => {
+      context.logger.log(`Injecting debug ids into ${sources}.`);
+      await execa(getSentryCliPath(), ["sourcemaps", "inject", sources], { stdio: "inherit" });
+    },
+  );
 };

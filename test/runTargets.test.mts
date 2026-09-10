@@ -6,6 +6,7 @@ const target = (project: string): ReleaseTarget => ({
   packageName: "my-app",
   sentryProjects: [project],
   uploadSourceMaps: false,
+  injectDebugIds: false,
   sources: "dist",
 });
 

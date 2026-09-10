@@ -15,6 +15,7 @@ const target = (packageName: string | undefined, ...sentryProjects: string[]): R
   packageName,
   sentryProjects,
   uploadSourceMaps: false,
+  injectDebugIds: false,
   sources: "dist",
 });
 

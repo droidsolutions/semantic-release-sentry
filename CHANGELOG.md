@@ -1,3 +1,26 @@
+# [2.0.0-beta.3](https://github.com/droidsolutions/semantic-release-sentry/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2026-09-10)
+
+
+### Bug Fixes
+
+* key exported release names by package name ([d9865fd](https://github.com/droidsolutions/semantic-release-sentry/commit/d9865fd8567f9ea045305e79afef6ac63f9313dc))
+
+
+### Features
+
+* inject debug ids into built files ([2036a31](https://github.com/droidsolutions/semantic-release-sentry/commit/2036a31b2e4e22906098bf5d74044b06f34168af))
+
+
+### BREAKING CHANGES
+
+* Release names are exported under a key suffixed with the package name instead of
+the Sentry project, so pipelines reading SENTRY_RELEASE_NAME_<PROJECT> must read
+SENTRY_RELEASE_NAME_<PACKAGE_NAME> instead. A releases array holding a single entry is now suffixed
+as well, where it previously kept the bare SENTRY_RELEASE_NAME key.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_013vc3kAor52PDFx84JuDWJp
+
 # [2.0.0-beta.2](https://github.com/droidsolutions/semantic-release-sentry/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2026-08-06)
 
 

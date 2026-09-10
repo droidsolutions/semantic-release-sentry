@@ -23,7 +23,7 @@ describe("prepare", () => {
   });
 
   afterEach(() => {
-    for (const key of Object.keys(process.env).filter((k) => k.startsWith("SENTRY_RELEASE_NAME"))) {
+    for (const key of Object.keys(process.env).filter((k) => k.startsWith("SENTRY_RELEASE"))) {
       delete process.env[key];
     }
   });
@@ -58,6 +58,85 @@ describe("prepare", () => {
     ]);
   });
 
+  it("keeps the bare key when the config declares no releases", async () => {
+    await prepare({ packageName: "my-app", sentryProject: "my-project", envFile: false } as UserConfig, context);
+
+    expect(process.env["SENTRY_RELEASE_NAME"]).toBe("my-app@1.2.3");
+  });
+
+  it("suffixes the key as soon as the releases array is used, even for one entry", async () => {
+    await prepare(
+      { envFile: false, releases: [{ packageName: "my-app-api", sentryProject: "my-project" }] } as UserConfig,
+      context,
+    );
+
+    expect(process.env["SENTRY_RELEASE_NAME_MY_APP_API"]).toBe("my-app-api@1.2.3");
+    expect(process.env["SENTRY_RELEASE_NAME"]).toBeUndefined();
+  });
+
+  it("gives releases that share one Sentry project a key each", async () => {
+    await prepare(
+      {
+        sentryProject: "my-project",
+        envFile: false,
+        releases: [{ packageName: "my-app-api" }, { packageName: "my-app-worker" }],
+      } as UserConfig,
+      context,
+    );
+
+    expect(process.env["SENTRY_RELEASE_NAME_MY_APP_API"]).toBe("my-app-api@1.2.3");
+    expect(process.env["SENTRY_RELEASE_NAME_MY_APP_WORKER"]).toBe("my-app-worker@1.2.3");
+  });
+
+  it("exports every created release name in the aggregate key", async () => {
+    await prepare(
+      {
+        sentryProject: "my-project",
+        envFile: false,
+        releases: [{ packageName: "my-app-api" }, { packageName: "my-app-worker" }],
+      } as UserConfig,
+      context,
+    );
+
+    expect(process.env["SENTRY_RELEASES"]).toBe("my-app-api@1.2.3;my-app-worker@1.2.3");
+  });
+
+  it("leaves a release out of the aggregate when it was never created", async () => {
+    vi.mocked(execa).mockImplementation((_bin, args) => {
+      if ((args as string[]).includes("my-app-api@1.2.3")) {
+        return Promise.reject(new Error("connection refused")) as never;
+      }
+      return Promise.resolve({}) as never;
+    });
+
+    await prepare(
+      {
+        sentryProject: "my-project",
+        envFile: false,
+        allowSentryFailure: true,
+        releases: [{ packageName: "my-app-api" }, { packageName: "my-app-worker" }],
+      } as UserConfig,
+      context,
+    );
+
+    expect(process.env["SENTRY_RELEASES"]).toBe("my-app-worker@1.2.3");
+  });
+
+  it("fails before creating anything when two releases resolve to the same key", async () => {
+    await expect(
+      prepare(
+        {
+          sentryProject: "my-project",
+          envFile: false,
+          releases: [{ packageName: "my-app" }, { packageName: "my-app" }],
+        } as UserConfig,
+        context,
+      ),
+    ).rejects.toThrow(/my-app/);
+
+    expect(cliCalls()).toEqual([]);
+  });
+
   it("exports one suffixed release name per release", async () => {
     await prepare(
       {
@@ -71,8 +150,8 @@ describe("prepare", () => {
       context,
     );
 
-    expect(process.env["SENTRY_RELEASE_NAME_API"]).toBe("my-app-api@1.2.3");
-    expect(process.env["SENTRY_RELEASE_NAME_WORKER"]).toBe("my-app-worker@1.2.3");
+    expect(process.env["SENTRY_RELEASE_NAME_MY_APP_API"]).toBe("my-app-api@1.2.3");
+    expect(process.env["SENTRY_RELEASE_NAME_MY_APP_WORKER"]).toBe("my-app-worker@1.2.3");
   });
 
   it("exports a release name only once that release was actually created", async () => {
@@ -97,8 +176,8 @@ describe("prepare", () => {
     );
 
     // The fail step deletes whatever is exported, so a release that was never created must not be.
-    expect(process.env["SENTRY_RELEASE_NAME_API"]).toBeUndefined();
-    expect(process.env["SENTRY_RELEASE_NAME_WORKER"]).toBe("my-app-worker@1.2.3");
+    expect(process.env["SENTRY_RELEASE_NAME_MY_APP_API"]).toBeUndefined();
+    expect(process.env["SENTRY_RELEASE_NAME_MY_APP_WORKER"]).toBe("my-app-worker@1.2.3");
   });
 
   it("attempts every release and aggregates the failures", async () => {

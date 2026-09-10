@@ -1,36 +1,77 @@
 import fs from "node:fs/promises";
 import { EOL } from "node:os";
+import { requirePackageName } from "./targets.mjs";
 import { ReleaseTarget } from "./userConfig.mjs";
 
 const BASE_KEY = "SENTRY_RELEASE_NAME";
+const RELEASES_KEY = "SENTRY_RELEASES";
 
 const toEnvKeySuffix = (target: ReleaseTarget): string =>
-  target.sentryProjects
-    .join("_")
+  requirePackageName(target)
     .replace(/[^a-zA-Z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "")
     .toUpperCase();
 
 /**
  * Builds the environment key that tells later CI steps about one release.
  *
- * A single release keeps the bare `SENTRY_RELEASE_NAME` key it has always used, so pipelines
- * written against earlier versions of this plugin keep working untouched. Several releases cannot
- * share one key, so each is suffixed with its Sentry projects.
+ * The suffix comes from the package name rather than the Sentry project because that is what actually distinguishes one
+ * release from another. Several releases may well live in a single project, and keying those by project would give them
+ * all the same name, of which only the last would survive into the pipeline.
  *
- * @param targets Every configured release, which decides whether keys are suffixed at all. It is
- * deliberately not the list of releases that succeeded, so one failing release never silently
- * changes the keys the rest of the pipeline reads.
  * @param target The release to build the key for.
+ * @param suffixed Whether the key is suffixed at all, which the `releases` array opts into. It is deliberately not
+ * derived from how many releases there are, so adding a release never renames the keys of the ones already configured.
  * @returns The environment variable name to publish the release under.
+ * @throws Error If the release has no package name to build the suffix from.
  */
-export const releaseEnvKey = (targets: ReleaseTarget[], target: ReleaseTarget): string =>
-  targets.length === 1 ? BASE_KEY : `${BASE_KEY}_${toEnvKeySuffix(target)}`;
+export const releaseEnvKey = (target: ReleaseTarget, suffixed: boolean): string =>
+  suffixed ? `${BASE_KEY}_${toEnvKeySuffix(target)}` : BASE_KEY;
+
+/**
+ * Checks that no two releases would be published under the same environment key.
+ *
+ * Writing them anyway loses every release but the last, quietly and only in the pipeline, so this runs before the first
+ * release is created rather than letting the run half succeed.
+ *
+ * @param targets Every configured release.
+ * @param suffixed Whether the keys are suffixed, as passed to {@link releaseEnvKey}.
+ * @throws Error If two releases resolve to the same key.
+ */
+export const assertUniqueEnvKeys = (targets: ReleaseTarget[], suffixed: boolean): void => {
+  const owners = new Map<string, string>();
+
+  for (const target of targets) {
+    const key = releaseEnvKey(target, suffixed);
+    const owner = owners.get(key);
+
+    if (owner !== undefined) {
+      throw new Error(
+        `Releases ${owner} and ${requirePackageName(target)} would both be exported as ${key}, give each release its own packageName.`,
+      );
+    }
+
+    owners.set(key, requirePackageName(target));
+  }
+};
+
+/**
+ * Builds the entry that carries every release name in one variable.
+ *
+ * Steps that act on all releases at once, such as reporting a deployment, would otherwise have to discover the
+ * individual keys by prefix.
+ *
+ * @param names The release names to publish, usually only those that were actually created.
+ * @returns The key and its semicolon separated value.
+ */
+export const releasesEnvEntry = (names: string[]): [string, string] => [RELEASES_KEY, names.join(";")];
 
 /**
  * Reads back the release names a previous step exported.
  *
  * The fail step is the only one Semantic Release calls without a `nextRelease`, so it cannot work
- * out the names itself and has to rely on what prepare left behind.
+ * out the names itself and has to rely on what prepare left behind. The aggregate key is not prefixed with the base
+ * key, so it is not picked up here and no release is deleted twice.
  *
  * @returns Every exported release name, empty when no release was created.
  */

@@ -202,16 +202,38 @@ They are written to three places:
 - the file named by `GITHUB_ENV`, whenever one is present, so the values are available to later
   steps of a GitHub Actions job without any extra configuration
 
-A single release uses the key `SENTRY_RELEASE_NAME`:
+A config without a [`releases`](#releases) array describes a single release and uses the bare key
+`SENTRY_RELEASE_NAME`:
 
 ```sh
 SENTRY_RELEASE_NAME=my-app@1.2.3
 ```
 
-Several releases cannot share one key, so each is suffixed with its Sentry projects:
+Using the `releases` array suffixes every key with the release's package name, uppercased and with
+anything an environment variable name cannot hold replaced by an underscore:
 
 ```sh
-SENTRY_RELEASE_NAME_MY_PROJECT_API=MyApp.Api@1.2.3
-SENTRY_RELEASE_NAME_MY_PROJECT_ADMIN=MyApp.Admin@1.2.3
-SENTRY_RELEASE_NAME_MY_PROJECT_WORKER=MyApp.Worker@1.2.3
+SENTRY_RELEASE_NAME_MY_APP_API=MyApp.Api@1.2.3
+SENTRY_RELEASE_NAME_MY_APP_ADMIN=MyApp.Admin@1.2.3
+SENTRY_RELEASE_NAME_MY_APP_WORKER=MyApp.Worker@1.2.3
+```
+
+The suffix comes from the package name rather than the Sentry project because that is what
+distinguishes one release from another. Several releases may share a single Sentry project, and
+those would otherwise all resolve to the same key, of which only the last would reach your pipeline.
+Two releases that still resolve to the same key fail the run before anything is created, rather than
+losing one silently.
+
+The array is what opts into the suffix, not the number of entries in it, so `releases` with a single
+entry is already suffixed and adding a second release later renames nothing:
+
+```sh
+SENTRY_RELEASE_NAME_MY_APP_API=MyApp.Api@1.2.3
+```
+
+Every created release name is additionally published together in `SENTRY_RELEASES`, separated by
+semicolons, for steps that act on all of them at once instead of on one deployment:
+
+```sh
+SENTRY_RELEASES=MyApp.Api@1.2.3;MyApp.Admin@1.2.3;MyApp.Worker@1.2.3
 ```

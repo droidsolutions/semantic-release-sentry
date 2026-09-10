@@ -79,23 +79,34 @@ export const resolveOrg = (pluginConfig: UserConfig): string | undefined =>
   pluginConfig.sentryOrg ?? process.env["SENTRY_ORG"];
 
 /**
- * Builds the name the release is known by in Sentry.
+ * Resolves the name a release is published under.
  *
  * @param target The release to name.
- * @param version The version Semantic Release is about to publish.
- * @returns The release name, in the `name@version` form Sentry SDKs use by default.
+ * @returns The package name.
  * @throws Error If no package name could be resolved. Creating a release literally called
- * `undefined@1.2.3` is worse than failing, and allowSentryFailure can carry a run this far.
+ * `undefined@1.2.3` is worse than failing, and allowSentryFailure can carry a run this far. The name also ends up in an
+ * environment key, where an unresolved name would collide just as quietly.
  */
-export const releaseName = (target: ReleaseTarget, version: string): string => {
+export const requirePackageName = (target: ReleaseTarget): string => {
   if (!target.packageName) {
     throw new Error(
       `No release name could be resolved for project ${target.sentryProjects.join(", ")}, set it via packageName config.`,
     );
   }
 
-  return `${target.packageName}@${version}`;
+  return target.packageName;
 };
+
+/**
+ * Builds the name the release is known by in Sentry.
+ *
+ * @param target The release to name.
+ * @param version The version Semantic Release is about to publish.
+ * @returns The release name, in the `name@version` form Sentry SDKs use by default.
+ * @throws Error If no package name could be resolved.
+ */
+export const releaseName = (target: ReleaseTarget, version: string): string =>
+  `${requirePackageName(target)}@${version}`;
 
 /**
  * Builds the CLI flags that point a command at the right organisation and project.

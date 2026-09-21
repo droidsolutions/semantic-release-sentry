@@ -57,7 +57,7 @@
     "jest": "30.5.1",
     "jest-circus": "30.5.1",
     "lint-staged": "17.5.0",
-    "prettier": "3.9.6",
+    "prettier": "3.9.8",
     "semantic-release": "25.0.9",
     "typescript": "5.9.3",
     "typescript-eslint": "8.70.0"

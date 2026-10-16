@@ -1,3 +1,53 @@
+# [2.0.0](https://github.com/droidsolutions/semantic-release-sentry/compare/v1.0.88...v2.0.0) (2026-10-16)
+
+
+### Bug Fixes
+
+* key exported release names by package name ([d9865fd](https://github.com/droidsolutions/semantic-release-sentry/commit/d9865fd8567f9ea045305e79afef6ac63f9313dc))
+
+
+### chore
+
+* update engines ([a11da89](https://github.com/droidsolutions/semantic-release-sentry/commit/a11da8956f95f35a02b44ae5b7d5e6254252da96))
+
+
+### Code Refactoring
+
+* migrate to ESM ([3b824cb](https://github.com/droidsolutions/semantic-release-sentry/commit/3b824cb966279d359f9c18dc1dc2d7996df2853e))
+
+
+### Features
+
+* allow release for multiple sentry projects per repo ([93bc204](https://github.com/droidsolutions/semantic-release-sentry/commit/93bc204bab5a356e5921e459e2b70250adc07ead))
+* **deps:** update @sentry/cli to 3.6.2 ([4c1591a](https://github.com/droidsolutions/semantic-release-sentry/commit/4c1591ad765ffe14ba8149af2aef10b7cc8a3bec))
+* inject debug ids into built files ([2036a31](https://github.com/droidsolutions/semantic-release-sentry/commit/2036a31b2e4e22906098bf5d74044b06f34168af))
+* **Sentry:** update @sentry/cli to 3.5.0 ([88380d1](https://github.com/droidsolutions/semantic-release-sentry/commit/88380d186433221e7f5d1aa61cc16f3b82dff514))
+* update to execa to v9 ([0899bdc](https://github.com/droidsolutions/semantic-release-sentry/commit/0899bdcd4b28e1f4d3a0c07b23ac9ae480e48f09))
+
+
+### BREAKING CHANGES
+
+* Release names are exported under a key suffixed with the package name instead of
+the Sentry project, so pipelines reading SENTRY_RELEASE_NAME_<PROJECT> must read
+SENTRY_RELEASE_NAME_<PACKAGE_NAME> instead. A releases array holding a single entry is now suffixed
+as well, where it previously kept the bare SENTRY_RELEASE_NAME key.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_013vc3kAor52PDFx84JuDWJp
+* allowed engines constrained to ^22.14.0 or >= 24.10.0
+to align with Semantic Release
+* **Sentry:** major update of Sentry CLI
+
+Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
+* underlying execa had multiple major updates,
+but everything should still work, just to be sure
+
+Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
+* this plugin is now ESM,
+should still work with Semantic Release without problems
+
+Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
+
 # [2.0.0-beta.3](https://github.com/droidsolutions/semantic-release-sentry/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2026-09-10)
 
 ### Bug Fixes

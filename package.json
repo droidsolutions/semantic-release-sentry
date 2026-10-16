@@ -45,7 +45,7 @@
   "dependencies": {
     "@semantic-release/error": "^4.0.0",
     "@sentry/cli": "^3.6.2",
-    "execa": "^9.6.1"
+    "execa": "^10.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "21.2.3",

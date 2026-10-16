@@ -15,11 +15,10 @@ updates:
       commitlint:
         patterns:
           - "@commitlint/*"
-      jest:
+      vitest:
         patterns:
-          - "jest"
-          - "jest-circus"
-          - "@types/jest"
+          - "vitest"
+          - "@vitest/*"
       typescript-eslint:
         patterns:
           - "@typescript-eslint/*"

@@ -1,16 +1,27 @@
 {
   "name": "@droidsolutions-oss/semantic-release-sentry",
-  "version": "1.0.88",
+  "version": "2.0.0-beta.3",
   "description": "Semantic release plugin to create Sentry releases",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "type": "module",
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
   "files": [
     "dist/*"
   ],
   "scripts": {
+    "prepare": "husky",
     "lint": "eslint .",
-    "build": "tsc",
-    "test": "jest"
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [
     "Sentry",
@@ -29,12 +40,12 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=15.14.0"
+    "node": "^22.14.0 || >=24.10.0"
   },
   "dependencies": {
     "@semantic-release/error": "^4.0.0",
-    "@sentry/cli": "^2.6.0",
-    "execa": "^5.1.1"
+    "@sentry/cli": "^3.6.2",
+    "execa": "^9.6.1"
   },
   "devDependencies": {
     "@commitlint/cli": "21.2.3",
@@ -42,40 +53,31 @@
     "@eslint/js": "10.0.1",
     "@semantic-release/changelog": "7.0.0",
     "@semantic-release/git": "11.0.1",
-    "@swc-node/jest": "1.10.1",
     "@types/aggregate-error": "1.0.1",
-    "@types/jest": "30.0.0",
     "@types/node": "26.6.5",
     "@types/semantic-release": "21.1.0",
+    "@vitest/coverage-v8": "^4.1.8",
     "eslint": "10.12.0",
     "eslint-config-prettier": "10.1.8",
-    "eslint-plugin-jest": "29.17.0",
     "eslint-plugin-n": "18.4.1",
     "eslint-plugin-prettier": "5.5.6",
     "globals": "17.13.0",
     "husky": "9.1.7",
-    "jest": "30.5.2",
-    "jest-circus": "30.5.2",
     "lint-staged": "17.6.0",
     "prettier": "3.9.10",
     "semantic-release": "25.0.9",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.71.2"
+    "typescript-eslint": "8.71.2",
+    "vitest": "^4.1.8"
   },
   "lint-staged": {
-    "*.[js,ts,json,md,yml]": "prettier --write",
-    "*.[js,ts]": "eslint"
+    "*.{js,mjs,ts,mts,json,md,yml}": "prettier --write",
+    "*.{js,mjs,ts,mts}": "eslint"
   },
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
   },
   "release": {
     "branches": [
@@ -94,40 +96,8 @@
       "@semantic-release/git"
     ]
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "lib/**/*.ts"
-    ],
-    "coverageReporters": [
-      "lcov",
-      "html",
-      "text"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "ts"
-    ],
-    "transform": {
-      "^.+\\.(t|j)sx?$": [
-        "@swc-node/jest",
-        {
-          "dynamicImport": true,
-          "swc": {
-            "jsc": {
-              "externalHelpers": false
-            }
-          }
-        }
-      ]
-    },
-    "testEnvironment": "node",
-    "testMatch": null,
-    "testRegex": "test/.*\\.test.ts$",
-    "testRunner": "jest-circus/runner"
-  },
   "allowScripts": {
-    "@sentry/cli@2.58.4": true,
-    "@swc/core@1.15.46": true,
-    "unrs-resolver@1.9.0": true
+    "@sentry/cli": true,
+    "fsevents": true
   }
 }

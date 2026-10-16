@@ -38,22 +38,13 @@
 the Sentry project, so pipelines reading SENTRY_RELEASE_NAME_<PROJECT> must read
 SENTRY_RELEASE_NAME_<PACKAGE_NAME> instead. A releases array holding a single entry is now suffixed
 as well, where it previously kept the bare SENTRY_RELEASE_NAME key.
-
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
-Claude-Session: https://claude.ai/code/session_013vc3kAor52PDFx84JuDWJp
 * allowed engines constrained to ^22.14.0 or >= 24.10.0
 to align with Semantic Release
 * **Sentry:** major update of Sentry CLI
-
-Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
 * underlying execa had multiple major updates,
 but everything should still work, just to be sure
-
-Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
 * this plugin is now ESM,
 should still work with Semantic Release without problems
-
-Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
 
 # [2.0.0-beta.3](https://github.com/droidsolutions/semantic-release-sentry/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2026-09-10)
 
@@ -71,9 +62,6 @@ Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
   the Sentry project, so pipelines reading SENTRY_RELEASE_NAME_<PROJECT> must read
   SENTRY_RELEASE_NAME_<PACKAGE_NAME> instead. A releases array holding a single entry is now suffixed
   as well, where it previously kept the bare SENTRY_RELEASE_NAME key.
-
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
-Claude-Session: https://claude.ai/code/session_013vc3kAor52PDFx84JuDWJp
 
 # [2.0.0-beta.2](https://github.com/droidsolutions/semantic-release-sentry/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2026-08-06)
 
@@ -105,18 +93,10 @@ Claude-Session: https://claude.ai/code/session_013vc3kAor52PDFx84JuDWJp
 ### BREAKING CHANGES
 
 - **Sentry:** major update of Sentry CLI
-
-Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
-
 - underlying execa had multiple major updates,
   but everything should still work, just to be sure
-
-Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
-
 - this plugin is now ESM,
   should still work with Semantic Release without problems
-
-Signed-off-by: Stefan Ißmer <stefan.issmer@droidsolutions.de>
 
 ## [1.0.88](https://github.com/droidsolutions/semantic-release-sentry/compare/v1.0.87...v1.0.88) (2025-12-15)
 

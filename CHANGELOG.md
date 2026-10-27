@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/droidsolutions/semantic-release-sentry/compare/v2.0.2...v2.0.3) (2026-10-27)
+
+
+### Bug Fixes
+
+* **deps:** bump execa from 10.1.1 to 10.2.1 ([31cdbbb](https://github.com/droidsolutions/semantic-release-sentry/commit/31cdbbbc5494a73517e10eb0053c38f09e9eceb2))
+
 ## [2.0.2](https://github.com/droidsolutions/semantic-release-sentry/compare/v2.0.1...v2.0.2) (2026-10-19)
 
 
